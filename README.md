@@ -47,7 +47,7 @@
     npm install
     ```
 
-4. Create a `.env` file in the root directory and add your Telegram bot token:
+4. Create a ```.env``` file in the root directory and add your Telegram bot token:
     ```
     TOKEN=your-telegram-bot-token
     ```
