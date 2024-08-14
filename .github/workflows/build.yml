@@ -21,5 +21,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+      env:
+          TOKEN: ${{ secrets.TOKEN }}
     - run: npm ci
     - run: npm start

@@ -8,6 +8,14 @@ const { fetchCurrentNotices, fetchSavedNotices, checkForNewNotices } = require('
 
 const bot = new TelegramBot(process.env.TOKEN, { polling: true });
 
+const exitAfterTimeout = () => {
+    setTimeout(() => {
+        process.exit(0);
+    }, 20000);
+};
+
+exitAfterTimeout();
+
 bot.onText('/start', async (msg) => {
     const chatIds = await fetchChatIds(chatIdsPath);
     if (!chatIds.includes(msg.chat.id)) {
@@ -28,7 +36,7 @@ bot.onText('/start', async (msg) => {
     });
 });
 
-bot.onText(/Yes/, async (msg) => {
+bot.onText('Yes', async (msg) => {
     let savedNotices = await fetchSavedNotices();
     for (let i = savedNotices.length - 1; i >= 0; i--) {
         const notice = savedNotices[i];
@@ -41,7 +49,7 @@ bot.onText(/Yes/, async (msg) => {
     await removeKeyboard(msg.chat.id);
 });
 
-bot.onText(/No/, async (msg) => {
+bot.onText('No', async (msg) => {
     await removeKeyboard(msg.chat.id);
 });
 
@@ -54,6 +62,7 @@ async function removeKeyboard(chatId) {
 }
 
 async function sendNotice() {
+    console.log('trigger');
     const currentNotices = await fetchCurrentNotices();
     const savedNotices = await fetchSavedNotices();
     const newNotices = await checkForNewNotices(currentNotices, savedNotices);
