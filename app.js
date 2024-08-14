@@ -6,7 +6,7 @@ const chatIdsPath = path.join(__dirname, '/assets/chatIds.json');
 const { fetchChatIds } = require('./chatIdsManager');
 const { fetchCurrentNotices, fetchSavedNotices, checkForNewNotices } = require('./noticeManager');
 
-const bot = new TelegramBot(process.env.TOKEN, { polling: true });
+const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 
 const exitAfterTimeout = () => {
     setTimeout(() => {
@@ -62,7 +62,6 @@ async function removeKeyboard(chatId) {
 }
 
 async function sendNotice() {
-    console.log('trigger');
     const currentNotices = await fetchCurrentNotices();
     const savedNotices = await fetchSavedNotices();
     const newNotices = await checkForNewNotices(currentNotices, savedNotices);
