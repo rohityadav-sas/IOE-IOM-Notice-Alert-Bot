@@ -34,12 +34,12 @@
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/iom-notice-alert-bot
+    git clone https://github.com/rohityadav-sas/IOM-Notice-Alert-Bot
     ```
 
 2. Navigate to the project directory:
     ```bash
-    cd iom-notice-alert-bot
+    cd IOM-Notice-Alert-Bot
     ```
 
 3. Install the required dependencies:
@@ -66,10 +66,10 @@
 ## How It Works
 
 - **Fetch Current Notices**: The bot fetches the latest notices from the IOM website using Axios and Cheerio.
-- **Fetch Saved Notices**: The bot reads previously saved notices from `savedNotices.json`.
+- **Fetch Saved Notices**: The bot reads previously saved notices from ```savedNotices.json```.
 - **Check for New Notices**: The bot compares the current notices with the saved ones to identify any new notices.
 - **Notify Users**: If there are any new notices, the bot sends them to all registered Telegram users.
-- **Save Notices**: The bot updates `savedNotices.json` with any new notices.
+- **Save Notices**: The bot updates ```savedNotices.json``` with any new notices.
 
 ## Dependencies
 
