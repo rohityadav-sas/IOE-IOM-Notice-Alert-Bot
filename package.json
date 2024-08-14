@@ -1,0 +1,22 @@
+{
+  "name": "iom-notice-alert-bot",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+    "nodejs",
+    "telegram-bot",
+    "iom-notice-alert-bot"
+  ],
+  "author": "Rohit Kumar",
+  "license": "ISC",
+  "description": "A telegram bot to get IOM notices",
+  "dependencies": {
+    "axios": "^1.7.4",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.4.5",
+    "node-telegram-bot-api": "^0.66.0"
+  }
+}
