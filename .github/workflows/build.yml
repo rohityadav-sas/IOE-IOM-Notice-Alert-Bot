@@ -31,12 +31,17 @@ jobs:
       run: |
        git config --global user.email "rohityadav.se@gmail.com"
        git config --global user.name "Rohit Yadav"
-    - name: Commit files
+    - name: Check for changes
       run: |
         git add .
-        git commit -m "Updated chatIds"
+        if git diff-index --quiet HEAD --; then
+          echo "No changes to commit"
+        else
+          git commit -m "Updated chatIds"
+        fi
+
     - name: Push changes
-      run: |
-          git push origin HEAD:master
+      run: git push origin HEAD:master
+      if: success() && steps.commit-changes.outcome == 'success'
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
