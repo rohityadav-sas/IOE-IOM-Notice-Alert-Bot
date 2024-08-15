@@ -23,5 +23,7 @@ jobs:
         cache: 'npm'
       env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-    - run: npm ci
-    - run: npm start
+    - name: Debug Environment Variables
+      run: printenv
+    # - run: npm ci
+    # - run: npm start
