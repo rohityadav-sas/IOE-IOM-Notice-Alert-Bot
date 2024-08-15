@@ -22,7 +22,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
       env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+
     - name: Debug Environment Variables
       run: printenv
     # - run: npm ci
