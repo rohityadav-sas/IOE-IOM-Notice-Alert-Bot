@@ -16,7 +16,7 @@
 
 ## Preview
 <div>
-  <img src="./assets/preview.png?raw=true" width="45%" height="691px"/>
+  <img src="./assets/preview.png?raw=true" width="45%" height="691px" style="padding-right:35px"/>
   <img src="./assets/preview2.png?raw=true"width="46%" height="691px" style="margin-left:35px"/>
 </div>
 
