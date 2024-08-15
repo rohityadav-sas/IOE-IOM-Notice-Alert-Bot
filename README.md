@@ -16,7 +16,7 @@
 
 ## Preview
 <div style="display:flex; justify-content:space-between">
-  <img src="./assets/preview.png?raw=true" height="100%" width="45%"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="./assets/preview.png?raw=true" height="100%" width="45%"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <img src="./assets/preview2.png?raw=true" height="100%" width="45%"/>
 </div>
 
