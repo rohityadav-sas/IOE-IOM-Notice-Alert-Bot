@@ -15,7 +15,11 @@
 - [Contributing](#contributing)
 
 ## Preview
-![preview.png](./assets/preview.png?raw=true)
+<div style="display: flex; justify-content: space-between;">
+  <img src="./assets/preview.png?raw=true" width="45%" />
+  <img src="./assets/preview2.png?raw=true"width="46%" />
+</div>
+
 
 ## Features
 
