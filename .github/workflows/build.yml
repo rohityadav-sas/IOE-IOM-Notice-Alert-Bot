@@ -22,7 +22,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
+    - name: Install Dependencies
+      run: npm ci
     - name: Run the code
       run: npm start
       env:
@@ -32,7 +33,7 @@ jobs:
        git config --global user.email "rohityadav.se@gmail.com"
        git config --global user.name "Rohit Yadav"
 
-    - id: identify-changes
+    - name: Check for Changes
       run: |
         git add .
         CHANGED_FILES=$(git diff --name-only HEAD)
@@ -45,12 +46,12 @@ jobs:
           echo "changes=true" >> $GITHUB_ENV
           echo "commit_message=Updated $CHANGED_FILES" >> $GITHUB_ENV
         fi
-    - name: commit-changes
+    - name: Commit Changes
       if: ${{ env.changes == 'true' }}
       run:
         git commit -m "${{ env.commit_message }}"
-    - name: Push changes
+    - name: Push Changes
       if: ${{env.changes == 'true'}}
       run: git push origin HEAD:master
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
