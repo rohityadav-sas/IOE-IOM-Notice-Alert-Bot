@@ -31,6 +31,7 @@ jobs:
       run: |
        git config --global user.email "rohityadav.se@gmail.com"
        git config --global user.name "Rohit Yadav"
+    - name: Check for changes and Commit
     - id: commit-changes
       run: |
         git add .
