@@ -27,3 +27,16 @@ jobs:
       run: npm start
       env:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+    - name: Configure Git
+      run: |
+       git config --global user.email "rohityadav.se@gmail.com"
+       git config --global user.name "Rohit Yadav"
+    - name: Commit files
+      run: |
+        git add .
+        git commit -m "Updated chatIds"
+    - name: Push changes
+      run: |
+          git push origin HEAD:master
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
