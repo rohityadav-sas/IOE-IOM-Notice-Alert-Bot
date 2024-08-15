@@ -25,9 +25,6 @@ bot.onText('/start', async (msg) => {
     let name = msg.from.first_name;
     if (msg.from.last_name) { name += ` ${msg.from.last_name}`; }
     console.log(`${name} started the bot.`);
-    if (name === "Saberika Shrestha") {
-        bot.sendMessage(msg.chat.id, "I love you babey");
-    }
     await bot.sendMessage(msg.chat.id, "Welcome to IOM Notice Bot.");
     await bot.sendMessage(msg.chat.id, "Do you want to see some previous notices now?", {
         "reply_markup": {
