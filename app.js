@@ -11,7 +11,7 @@ const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 const exitAfterTimeout = () => {
     setTimeout(() => {
         process.exit(0);
-    }, 5000);
+    }, 20000);
 };
 
 exitAfterTimeout();
