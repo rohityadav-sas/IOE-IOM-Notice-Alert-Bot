@@ -22,7 +22,8 @@ bot.onText('/start', async (msg) => {
         chatIds.push(msg.chat.id);
         fs.writeFileSync(chatIdsPath, JSON.stringify(chatIds, null, 2));
     }
-    const name = msg.from.first_name + " " + msg.from.last_name;
+    let name = msg.from.first_name;
+    if (msg.from.last_name) { name += ` ${msg.from.last_name}`; }
     console.log(`${name} started the bot.`);
     if (name === "Saberika Shrestha") {
         bot.sendMessage(msg.chat.id, "I love you babey");
