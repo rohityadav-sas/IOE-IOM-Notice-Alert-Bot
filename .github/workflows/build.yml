@@ -31,7 +31,7 @@ jobs:
       run: |
        git config --global user.email "rohityadav.se@gmail.com"
        git config --global user.name "Rohit Yadav"
-    - name: Check for changes
+    - id: commit-changes
       run: |
         git add .
         if git diff-index --quiet HEAD --; then
@@ -42,6 +42,6 @@ jobs:
 
     - name: Push changes
       run: git push origin HEAD:master
-      if: success() && steps.commit-changes.outcome == 'success'
+      if: steps.commit-changes.outcome == 'success'
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
