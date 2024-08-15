@@ -36,12 +36,14 @@ jobs:
         git add .
         if git diff-index --quiet HEAD --; then
           echo "No changes to commit"
+          echo "::set-output name=changes::false"
         else
           git commit -m "Updated chatIds"
+          echo "::set-output name=changes::true"
         fi
 
     - name: Push changes
       run: git push origin HEAD:master
-      if: steps.commit-changes.outcome == 'success'
+      if: steps.commit-changes.outputs.changes == 'true'
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
