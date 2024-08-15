@@ -15,9 +15,9 @@
 - [Contributing](#contributing)
 
 ## Preview
-<div>
+<div style="display:flex; justify-content:space-between">
   <img src="./assets/preview.png?raw=true" height="100%" width="100%"/>
-  <img src="./assets/preview2.png?raw=true" height="100%" width="100%" style="margin-left:35px"/>
+  <img src="./assets/preview2.png?raw=true" height="100%" width="100%"/>
 </div>
 
 
