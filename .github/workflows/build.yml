@@ -35,7 +35,7 @@ jobs:
     - id: identify-changes
       run: |
         git add .
-        CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+        CHANGED_FILES=$(git diff --name-only HEAD)
         if [ -z "$CHANGED_FILES" ]; then
           echo "No changes detected."
           echo "changes=false" >> $GITHUB_ENV
@@ -43,19 +43,12 @@ jobs:
         else
           echo "Files changed: $CHANGED_FILES"
           echo "changes=true" >> $GITHUB_ENV
-          echo "commit_message=Changes: $CHANGED_FILES" >> $GITHUB_ENV
+          echo "commit_message=Updated $CHANGED_FILES" >> $GITHUB_ENV
         fi
-    - id: commit-changes
-      run: |
-        git add .
-        if git diff-index --quiet HEAD --; then
-          echo "No changes to commit"
-          echo "changes=false" >> $GITHUB_ENV
-        else
-          git commit -m "Updated chatIds"
-          echo "changes=true" >> $GITHUB_ENV
-        fi
-
+    - name: commit-changes
+      if: ${{ env.changes == 'true' }}
+      run:
+        git commit -m "${{ env.commit_message }}"
     - name: Push changes
       if: ${{env.changes == 'true'}}
       run: git push origin HEAD:master
