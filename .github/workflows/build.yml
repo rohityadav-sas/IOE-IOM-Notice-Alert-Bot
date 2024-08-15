@@ -31,6 +31,20 @@ jobs:
       run: |
        git config --global user.email "rohityadav.se@gmail.com"
        git config --global user.name "Rohit Yadav"
+
+    - id: identify-changes
+      run: |
+        git add .
+        CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+        if [ -z "$CHANGED_FILES" ]; then
+          echo "No changes detected."
+          echo "changes=false" >> $GITHUB_ENV
+          echo "commit_message=No changes" >> $GITHUB_ENV
+        else
+          echo "Files changed: $CHANGED_FILES"
+          echo "changes=true" >> $GITHUB_ENV
+          echo "commit_message=Changes: $CHANGED_FILES" >> $GITHUB_ENV
+        fi
     - id: commit-changes
       run: |
         git add .
@@ -43,7 +57,7 @@ jobs:
         fi
 
     - name: Push changes
-      if: env.changes == 'true'
+      if: ${{env.changes == 'true'}}
       run: git push origin HEAD:master
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
