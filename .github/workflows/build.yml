@@ -3,7 +3,7 @@ name: IOM-Notice-Alert-Bot
 on:
   workflow_dispatch: # Manually run the workflow
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/10 * * * *'
 
 jobs:
   build:
