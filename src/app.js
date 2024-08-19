@@ -2,7 +2,7 @@ require('dotenv').config();
 const TelegramBot = require('node-telegram-bot-api');
 const fs = require('fs');
 const path = require('path');
-const chatIdsPath = path.join(__dirname, '/assets/chatIds.json');
+const chatIdsPath = path.join(__dirname, '../assets/chatIds.json');
 const { fetchChatIds } = require('./chatIdsManager');
 const { fetchCurrentNotices, fetchSavedNotices, checkForNewNotices } = require('./noticeManager');
 
@@ -40,9 +40,9 @@ bot.onText('Yes', async (msg) => {
     for (let i = savedNotices.length - 1; i >= 0; i--) {
         const notice = savedNotices[i];
         const date = notice.Date;
-        const title = notice.Title;
+        const description = notice.Description;
         const url = notice.Url;
-        const message = `ㅤ\n<b>Date: </b><u><b>${date}</b></u>\n\n<b>${title}</b>\n\n<a href="${url}">Read more</a>`;
+        const message = `ㅤ\n<b>Date: </b><u><b>${date}</b></u>\n\n<b>${description}</b>\n\n<a href="${url}">Read more</a>`;
         await bot.sendMessage(msg.chat.id, message, { parse_mode: 'HTML' });
     }
     await removeKeyboard(msg.chat.id);
@@ -71,9 +71,9 @@ async function sendNotice() {
             for (let j = newNotices.length - 1; j >= 0; j--) {
                 const notice = newNotices[j];
                 const date = notice.Date;
-                const title = notice.Title;
+                const description = notice.Description;
                 const url = notice.Url;
-                const message = `ㅤ\n<b>Date: </b><u><b>${date}</b></u>\n\n<b>${title}</b>\n\n<a href="${url}">Read more</a>`;
+                const message = `ㅤ\n<b>Date: </b><u><b>${date}</b></u>\n\n<b>${description}</b>\n\n<a href="${url}">Read more</a>`;
                 await bot.sendMessage(chatId, message, { parse_mode: 'HTML' });
             }
         }
