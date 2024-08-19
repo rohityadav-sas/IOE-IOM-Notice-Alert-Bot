@@ -48,8 +48,7 @@ async function checkForNewNotices(currentNotices, savedNotices) {
     const newNotices = currentNotices.filter((notice) =>
         !savedNotices.some(savedNotice =>
             savedNotice.Date === notice.Date &&
-            savedNotice.Description === notice.Description &&
-            savedNotice.Url === notice.Url
+            savedNotice.Description === notice.Description
         )
     );
     if (newNotices.length > 0) {
