@@ -61,22 +61,28 @@ async function removeKeyboard(chatId) {
 }
 
 async function sendNotice() {
-    const currentNotices = await fetchCurrentNotices();
-    const savedNotices = await fetchSavedNotices();
-    const newNotices = await checkForNewNotices(currentNotices, savedNotices);
-    if (newNotices.length > 0) {
-        const chatIds = await fetchChatIds(chatIdsPath);
-        for (let i = 0; i < chatIds.length; i++) {
-            const chatId = chatIds[i];
-            for (let j = newNotices.length - 1; j >= 0; j--) {
-                const notice = newNotices[j];
-                const date = notice.Date;
-                const description = notice.Description;
-                const url = notice.Url;
-                const message = `ㅤ\n<b>Date: </b><u><b>${date}</b></u>\n\n<b>${description}</b>\n\n<a href="${url}">Read more</a>`;
-                await bot.sendMessage(chatId, message, { parse_mode: 'HTML' });
+    try {
+        const currentNotices = await fetchCurrentNotices();
+        const savedNotices = await fetchSavedNotices();
+        const newNotices = await checkForNewNotices(currentNotices, savedNotices);
+        if (newNotices.length > 0) {
+            const chatIds = await fetchChatIds(chatIdsPath);
+            for (let i = 0; i < chatIds.length; i++) {
+                const chatId = chatIds[i];
+                for (let j = newNotices.length - 1; j >= 0; j--) {
+                    const notice = newNotices[j];
+                    const date = notice.Date;
+                    const description = notice.Description;
+                    const url = notice.Url;
+                    const message = `ㅤ\n<b>Date: </b><u><b>${date}</b></u>\n\n<b>${description}</b>\n\n<a href="${url}">Read more</a>`;
+                    await bot.sendMessage(chatId, message, { parse_mode: 'HTML' });
+                }
             }
         }
+    }
+    catch (error) {
+        console.log("Error in sending notice: ", error);
+        process.exit(1);
     }
 }
 

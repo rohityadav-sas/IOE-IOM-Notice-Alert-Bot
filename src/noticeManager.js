@@ -49,8 +49,7 @@ async function checkForNewNotices(currentNotices, savedNotices) {
         !savedNotices.some(savedNotice =>
             savedNotice.Date === notice.Date &&
             savedNotice.Description === notice.Description
-        )
-    );
+        ));
     if (newNotices.length > 0) {
         savedNotices.unshift(...newNotices);
         saveNotices(savedNotices);
