@@ -5,25 +5,24 @@ const path = require('path');
 const fileIOM = path.join(__dirname, '../assets/savedNotices.json');
 
 async function fetchCurrentNotices() {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const result = await axios.get('http://www.iomexam.edu.np/index.php/exam/results');
-            const $ = cheerio.load(result.data);
-            const table = $('.table.table-striped.table-bordered.dTableR tbody');
-            const currentNotices = [];
-            for (let i = 0; i < 10; i++) {
-                const row = table.eq(i);
-                const date = row.find('td').eq(0).text().trim();
-                const description = row.find('td').eq(2).text().trim();
-                const url = row.find('td').eq(3).find('a').attr('href');
-                currentNotices.push({ Date: date, Description: description, Url: url });
-            }
-            resolve(currentNotices);
+    try {
+        const result = await axios.get('http://www.iomexam.edu.np/index.php/exam/results');
+        const $ = cheerio.load(result.data);
+        const table = $('.table.table-striped.table-bordered.dTableR tbody');
+        const currentNotices = [];
+        for (let i = 0; i < 10; i++) {
+            const row = table.eq(i);
+            const date = row.find('td').eq(0).text().trim();
+            const description = row.find('td').eq(2).text().trim();
+            const url = row.find('td').eq(3).find('a').attr('href');
+            currentNotices.push({ Date: date, Description: description, Url: url });
         }
-        catch (err) {
-            reject(err);
-        }
-    });
+        resolve(currentNotices);
+    }
+    catch (error) {
+        console.log(error);
+        return [];
+    }
 }
 
 async function fetchSavedNotices() {
