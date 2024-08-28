@@ -37,22 +37,22 @@
 ## Installation
 
 1. Clone the repository:
-    ```bash
+    ```sh
     git clone https://github.com/rohityadav-sas/IOM-Notice-Alert-Bot
     ```
 
 2. Navigate to the project directory:
-    ```bash
+    ```sh
     cd IOM-Notice-Alert-Bot
     ```
 
 3. Install the required dependencies:
-    ```bash
+    ```sh
     npm install
     ```
 
 4. Create a ```.env``` file in the root directory and add your Telegram bot token:
-    ```
+    ```env
     TOKEN=your-telegram-bot-token
     ```
 
