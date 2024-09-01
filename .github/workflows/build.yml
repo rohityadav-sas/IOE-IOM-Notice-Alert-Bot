@@ -27,7 +27,8 @@ jobs:
     - name: Run the code
       run: npm start
       env:
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_BOT_TOKEN_IOE: ${{ secrets.TELEGRAM_BOT_TOKEN_IOE }}
+        TELEGRAM_BOT_TOKEN_IOM: ${{ secrets.TELEGRAM_BOT_TOKEN_IOM }}
     - name: Configure Git
       run: |
        git config --global user.email "rohityadav.se@gmail.com"
