@@ -1,6 +1,6 @@
 {
-  "name": "iom-notice-alert-bot",
-  "version": "1.0.0",
+  "name": "ioe-iom-notice-alert-bot",
+  "version": "1.0.1",
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js"
@@ -8,11 +8,12 @@
   "keywords": [
     "nodejs",
     "telegram-bot",
-    "iom-notice-alert-bot"
+    "iom-notice-alert-bot",
+    "ioe-notice-alert-bot"
   ],
   "author": "Rohit Kumar",
   "license": "ISC",
-  "description": "A telegram bot to get IOM notices",
+  "description": "A telegram bot to get IOE and IOM notices",
   "dependencies": {
     "axios": "^1.7.4",
     "cheerio": "^1.0.0",
