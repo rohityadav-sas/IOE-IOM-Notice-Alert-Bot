@@ -1,87 +1,39 @@
 require('dotenv').config();
 const TelegramBot = require('node-telegram-bot-api');
-const fs = require('fs');
 const path = require('path');
-const chatIdsPath = path.join(__dirname, '../assets/chatIds.json');
-const { fetchChatIds } = require('./chatIdsManager');
-const { fetchCurrentNotices, fetchSavedNotices, checkForNewNotices } = require('./noticeManager');
+const { botOnStart, botCallback } = require('./utils/botManager');
+const { sendNoticeIOE, sendNoticeIOM } = require('./utils/utils');
+const chatIdsPathIOE = path.join(__dirname, './ioe/IOEChatIds.json');
+const chatIdsPathIOM = path.join(__dirname, './iom/IOMChatIds.json');
+const IOMSavedNoticesPath = path.join(__dirname, './iom/IOMSavedNotices.json');
+const IOESavedNoticesPath = path.join(__dirname, './ioe/IOESavedNotices.json');
 
-const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
-
-const exitAfterTimeout = () => {
-    setTimeout(() => {
-        process.exit(0);
-    }, 20000);
-};
-
-exitAfterTimeout();
-
-bot.onText('/start', async (msg) => {
-    const chatIds = await fetchChatIds(chatIdsPath);
-    if (!chatIds.includes(msg.chat.id)) {
-        chatIds.push(msg.chat.id);
-        fs.writeFileSync(chatIdsPath, JSON.stringify(chatIds, null, 2));
-    }
-    let name = msg.from.first_name;
-    if (msg.from.last_name) { name += ` ${msg.from.last_name}`; }
-    console.log(`${name} started the bot.`);
-    await bot.sendMessage(msg.chat.id, "Welcome to IOM Notice Alert Bot.");
-    await bot.sendMessage(msg.chat.id, "Do you want to see some previous notices?", {
-        "reply_markup": {
-            "keyboard": [["Yes", "No"]],
-            "resize_keyboard": true,
-            "one_time_keyboard": true
-        }
-    });
-});
-
-bot.onText('Yes', async (msg) => {
-    let savedNotices = await fetchSavedNotices();
-    for (let i = savedNotices.length - 1; i >= 0; i--) {
-        const notice = savedNotices[i];
-        const date = notice.Date;
-        const description = notice.Description;
-        const url = notice.Url;
-        const message = `ㅤ\n<b>Date: </b><u><b>${date}</b></u>\n\n<b>${description}</b>\n\n<a href="${url}">Read more</a>`;
-        await bot.sendMessage(msg.chat.id, message, { parse_mode: 'HTML' });
-    }
-    await removeKeyboard(msg.chat.id);
-});
-
-bot.onText('No', async (msg) => {
-    await removeKeyboard(msg.chat.id);
-});
-
-async function removeKeyboard(chatId) {
-    await bot.sendMessage(chatId, "🚀 You will now receive notices from IOM as soon as they are published. 🚀", {
-        "reply_markup": {
-            "remove_keyboard": true
-        }
-    });
-}
-
-async function sendNotice() {
-    const currentNotices = await fetchCurrentNotices();
-    if (currentNotices.length === 0) {
-        console.log("Error fetching current notices.");
-        return;
-    }
-    const savedNotices = await fetchSavedNotices();
-    const newNotices = await checkForNewNotices(currentNotices, savedNotices);
-    if (newNotices.length > 0) {
-        const chatIds = await fetchChatIds(chatIdsPath);
-        for (let i = 0; i < chatIds.length; i++) {
-            const chatId = chatIds[i];
-            for (let j = newNotices.length - 1; j >= 0; j--) {
-                const notice = newNotices[j];
-                const date = notice.Date;
-                const description = notice.Description;
-                const url = notice.Url;
-                const message = `ㅤ\n<b>Date: </b><u><b>${date}</b></u>\n\n<b>${description}</b>\n\n<a href="${url}">Read more</a>`;
-                await bot.sendMessage(chatId, message, { parse_mode: 'HTML' });
-            }
-        }
+async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, botName, pollingDuration) {
+    const bot = new TelegramBot(botToken, { polling: true });
+    try {
+        await botOnStart(bot, chatIdsPath, botName);
+        await botCallback(bot, savedNoticesPath);
+        await sendNoticeFn(bot);
+        setTimeout(() => {
+            bot.stopPolling();
+            console.log(`${botName} bot stopped polling after ${pollingDuration} seconds.`);
+        }, pollingDuration * 1000);
+    } catch (error) {
+        console.error(`Error with ${botName}:`, error);
+        bot.stopPolling();
     }
 }
 
-sendNotice();
+async function main() {
+    const pollingDuration = 5;
+    try {
+        await Promise.all([
+            handleBot(process.env.TELEGRAM_BOT_TOKEN_IOE, chatIdsPathIOE, IOESavedNoticesPath, sendNoticeIOE, 'IOE', pollingDuration),
+            handleBot(process.env.TELEGRAM_BOT_TOKEN_IOM, chatIdsPathIOM, IOMSavedNoticesPath, sendNoticeIOM, 'IOM', pollingDuration)
+        ]);
+    } catch (error) {
+        console.error('An error occurred while running the bots:', error);
+    }
+}
+
+main();
