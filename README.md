@@ -1,6 +1,6 @@
-## IOM Notice Alert Bot
+## IOE-IOM Notice Alert Bot
 
-**IOM Notice Alert Bot** is a Node.js Telegram bot that retrieves examination result notifications from the Institute of Medicine’s (IOM) website and delivers them directly to your Telegram account when new notices are available.
+**IOE-IOM Notice Alert Bot** is a Node.js Telegram bot that retrieves examination result notifications from the Institute of Engineering's (IOE) and Institute of Medicine’s (IOM) website and delivers them directly to your Telegram account when new notices are available.
 
 ## Table of Contents
 
@@ -23,7 +23,7 @@
 
 ## Features
 
-- Fetches the latest exam result notices from the IOM website.
+- Fetches the latest exam result notices from the IOE and IOM website.
 - Compares the fetched notices with previously saved notices to identify new ones.
 - Sends the new notices directly to your Telegram account.
 - Welcomes users and offers the option to view previous notices.
@@ -38,12 +38,12 @@
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/rohityadav-sas/IOM-Notice-Alert-Bot
+    git clone https://github.com/rohityadav-sas/IOE-IOM-Notice-Alert-Bot.git
     ```
 
 2. Navigate to the project directory:
     ```sh
-    cd IOM-Notice-Alert-Bot
+    cd IOE-IOM-Notice-Alert-Bot
     ```
 
 3. Install the required dependencies:
@@ -53,7 +53,9 @@
 
 4. Create a ```.env``` file in the root directory and add your Telegram bot token:
     ```env
-    TOKEN=your-telegram-bot-token
+    TELEGRAM_BOT_TOKEN_IOE=your-ioe-telegram-bot-token
+
+    TELEGRAM_BOT_TOKEN_IOM=your-iom-telegram-bot-token
     ```
 
 ## Usage
@@ -65,15 +67,15 @@
 
 2. Interact with the bot via Telegram by sending the `/start` command.
 
-3. The bot will automatically send you new IOM notices as they are published.
+3. The bot will automatically send you new IOE and IOM notices as they are published.
 
 ## How It Works
 
-- **Fetch Current Notices**: The bot fetches the latest notices from the IOM website using Axios and Cheerio.
-- **Fetch Saved Notices**: The bot reads previously saved notices from ```savedNotices.json```.
+- **Fetch Current Notices**: The bot fetches the latest notices from the IOE and IOM website using Axios and Cheerio.
+- **Fetch Saved Notices**: The bot reads previously saved notices from `IOESavedNotices.json` and `IOMSavedNotices.json`.
 - **Check for New Notices**: The bot compares the current notices with the saved ones to identify any new notices.
 - **Notify Users**: If there are any new notices, the bot sends them to all registered Telegram users.
-- **Save Notices**: The bot updates ```savedNotices.json``` with any new notices.
+- **Save Notices**: The bot updates `IOESavedNotices.json` and `IOMSavedNotices.json` with any new notices.
 
 ## Dependencies
 
