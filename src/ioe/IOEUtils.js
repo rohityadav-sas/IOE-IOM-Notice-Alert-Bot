@@ -63,9 +63,12 @@ async function officialIOE() {
             let date = $notice('.post-inner-content header time.entry-date').text().trim();
             const match = date.match(/(\w+ \d{1,2}, \d{4})/);
             if (match) {
-                const extractedDate = new Date(match[0]);
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                date = new Intl.DateTimeFormat('en-US', options).format(extractedDate);
+                date = new Intl.DateTimeFormat('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                }).format(new Date(match[0]));
             }
             currentNotices.push({ Date: date, Description: description, Url: url });
         }
