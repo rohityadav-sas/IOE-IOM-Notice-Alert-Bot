@@ -24,8 +24,10 @@ async function botCallback(bot, savedNoticesPath) {
         const messageId = query.message.message_id;
         const college = query.message.from.first_name.split(' ')[0];
         if (query.data === 'Yes') {
-            let savedNotices = await fetchSavedNotices(savedNoticesPath);
-            await sendMessagesToChatIds(bot, [chatId], savedNotices);
+            await Promise.all(savedNoticesPath.map(async (path) => {
+                const savedNotices = await fetchSavedNotices(path);
+                await sendMessagesToChatIds(bot, [chatId], savedNotices);
+            }));
         }
         await bot.sendMessage(
             chatId,

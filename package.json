@@ -1,6 +1,6 @@
 {
   "name": "ioe-iom-notice-alert-bot",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js"

@@ -5,8 +5,9 @@ const { botOnStart, botCallback } = require('./utils/botManager');
 const { sendNoticeIOE, sendNoticeIOM } = require('./utils/utils');
 const chatIdsPathIOE = path.join(__dirname, './ioe/IOEChatIds.json');
 const chatIdsPathIOM = path.join(__dirname, './iom/IOMChatIds.json');
-const IOMSavedNoticesPath = path.join(__dirname, './iom/IOMSavedNotices.json');
-const IOESavedNoticesPath = path.join(__dirname, './ioe/IOESavedNotices.json');
+const IOMExamNoticesPath = path.join(__dirname, './iom/IOM_Exam_Notices.json');
+const IOEExamNoticesPath = path.join(__dirname, './ioe/IOE_Exam_Notices.json');
+const IOEEntranceNoticesPath = path.join(__dirname, './ioe/IOE_Entrance_Notices.json');
 
 async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, botName, pollingDuration) {
     const bot = new TelegramBot(botToken, { polling: true });
@@ -25,11 +26,11 @@ async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, 
 }
 
 async function main() {
-    const pollingDuration = 5;
+    const pollingDuration = 10;
     try {
         await Promise.all([
-            handleBot(process.env.TELEGRAM_BOT_TOKEN_IOE, chatIdsPathIOE, IOESavedNoticesPath, sendNoticeIOE, 'IOE', pollingDuration),
-            handleBot(process.env.TELEGRAM_BOT_TOKEN_IOM, chatIdsPathIOM, IOMSavedNoticesPath, sendNoticeIOM, 'IOM', pollingDuration)
+            handleBot(process.env.TELEGRAM_BOT_TOKEN_IOE, chatIdsPathIOE, [IOEExamNoticesPath, IOEEntranceNoticesPath], sendNoticeIOE, 'IOE', pollingDuration),
+            handleBot(process.env.TELEGRAM_BOT_TOKEN_IOM, chatIdsPathIOM, [IOMExamNoticesPath], sendNoticeIOM, 'IOM', pollingDuration)
         ]);
     } catch (error) {
         console.error('An error occurred while running the bots:', error);

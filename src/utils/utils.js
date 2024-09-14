@@ -1,16 +1,28 @@
 const fs = require('fs');
 const path = require('path');
 const { fetchSavedNotices, checkForNewNotices, fetchCurrentNoticesIOE, fetchCurrentNoticesIOM } = require('./noticeManager');
-const IOMSavedNoticesPath = path.join(__dirname, '../iom/IOMSavedNotices.json');
-const IOESavedNoticesPath = path.join(__dirname, '../ioe/IOESavedNotices.json');
+const IOMExamNoticesPath = path.join(__dirname, '../iom/IOM_Exam_Notices.json');
+const IOEExamNoticesPath = path.join(__dirname, '../ioe/IOE_Exam_Notices.json');
+const IOEEntranceNoticesPath = path.join(__dirname, '../ioe/IOE_Entrance_Notices.json');
 const IOMChatIdsPath = path.join(__dirname, '../iom/IOMChatIds.json');
 const IOEChatIdsPath = path.join(__dirname, '../ioe/IOEChatIds.json');
 
 
+let cachedChatIds = {};
+
 async function fetchChatIds(chatIdsPath) {
-    const chatIds = fs.readFileSync(chatIdsPath, 'utf-8');
-    if (!chatIds) { return [] }
-    return JSON.parse(chatIds);
+    if (cachedChatIds[chatIdsPath]) {
+        return cachedChatIds[chatIdsPath];
+    }
+
+    try {
+        const chatIds = JSON.parse(fs.readFileSync(chatIdsPath, 'utf-8')) || [];
+        cachedChatIds[chatIdsPath] = chatIds;
+        return chatIds;
+    } catch (error) {
+        console.error(`Error reading chat IDs from ${chatIdsPath}: ${error.message}`);
+        return [];
+    }
 }
 
 async function compareAndSaveChatIds(chatID, chatIdsPath) {
@@ -18,16 +30,23 @@ async function compareAndSaveChatIds(chatID, chatIdsPath) {
     if (!chatIds.includes(chatID)) {
         chatIds.push(chatID);
         fs.writeFileSync(chatIdsPath, JSON.stringify(chatIds, null, 2));
+        cachedChatIds[chatIdsPath] = chatIds;  // Update cache
     }
 }
 
+
 async function sendNotices(bot, fetchCurrentNotices, savedNoticesPath, chatIdsPath) {
-    const currentNotices = await fetchCurrentNotices();
-    const savedNotices = await fetchSavedNotices(savedNoticesPath);
-    const newNotices = await checkForNewNotices(currentNotices, savedNotices, savedNoticesPath);
-    if (newNotices.length > 0) {
-        const chatIds = await fetchChatIds(chatIdsPath);
-        await sendMessagesToChatIds(bot, chatIds, newNotices);
+    try {
+        const savedNotices = await fetchSavedNotices(savedNoticesPath);
+        const currentNotices = await fetchCurrentNotices;
+        const newNotices = await checkForNewNotices(currentNotices, savedNotices, savedNoticesPath);
+        if (newNotices.length > 0) {
+            const chatIds = await fetchChatIds(chatIdsPath);
+            await sendMessagesToChatIds(bot, chatIds, newNotices);
+        }
+    }
+    catch (error) {
+        console.error(`Error sending notices: ${error.message}`);
     }
 }
 
@@ -47,11 +66,12 @@ function formatMessage(notice) {
 }
 
 async function sendNoticeIOE(bot) {
-    await sendNotices(bot, fetchCurrentNoticesIOE, IOESavedNoticesPath, IOEChatIdsPath);
+    await sendNotices(bot, fetchCurrentNoticesIOE('exam'), IOEExamNoticesPath, IOEChatIdsPath);
+    await sendNotices(bot, fetchCurrentNoticesIOE('entrance'), IOEEntranceNoticesPath, IOEChatIdsPath);
 }
 
 async function sendNoticeIOM(bot) {
-    await sendNotices(bot, fetchCurrentNoticesIOM, IOMSavedNoticesPath, IOMChatIdsPath);
+    await sendNotices(bot, fetchCurrentNoticesIOM(), IOMExamNoticesPath, IOMChatIdsPath);
 }
 
 
