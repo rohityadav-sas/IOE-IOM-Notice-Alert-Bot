@@ -1,4 +1,4 @@
-const { compareAndSaveChatIds } = require('./utils');
+const { compareAndSaveChatIds, sendMessagesToChatIds } = require('./utils');
 const { fetchSavedNotices } = require('./noticeManager');
 
 async function botOnStart(bot, chatIdsPath, college) {
@@ -25,22 +25,15 @@ async function botCallback(bot, savedNoticesPath) {
         const college = query.message.from.first_name.split(' ')[0];
         if (query.data === 'Yes') {
             let savedNotices = await fetchSavedNotices(savedNoticesPath);
-            for (let i = savedNotices.length - 1; i >= 0; i--) {
-                const notice = savedNotices[i];
-                const date = notice.Date;
-                const description = notice.Description;
-                const url = notice.Url;
-                const message = `
-        ㅤ
-        <b>Date: </b><u><b>${date}</b></u><br><br>
-        <b>${description}</b><br><br>
-        <a href="${url}">🔗 Read more</a>
-    `;
-                const message1 = `ㅤ\n<b>Date: </b><u><b>${date}</b></u>\n\n<b>${description}</b>\n\n<a href="${url}">Read more</a>`;
-                await bot.sendMessage(chatId, message, { parse_mode: 'HTML' });
-            }
+            await sendMessagesToChatIds(bot, [chatId], savedNotices);
         }
-        await bot.sendMessage(chatId, `🚀 You will now receive notices from ${college} as soon as they are published. 🚀`,);
+        await bot.sendMessage(
+            chatId,
+            `✅ You are now all set!\n\n` +
+            `📢 You will now receive all important notices from <b>${college}</b> as soon as they are published.\n\n` +
+            `Stay tuned for the latest updates! 🚀`,
+            { parse_mode: 'HTML' }
+        );
         await bot.deleteMessage(chatId, messageId);
     });
 }

@@ -43,12 +43,7 @@ async function sendMessagesToChatIds(bot, chatIds, notices) {
 
 function formatMessage(notice) {
     const { Date: date, Description: description, Url: url } = notice;
-    return `
-        ㅤ
-        <b>Date: </b><u><b>${date}</b></u><br><br>
-        <b>${description}</b><br><br>
-        <a href="${url}">🔗 Read more</a>
-    `;
+    return `<b>📅  Date: </b><u><b>${date}</b></u>\n\n<b>📝  Notice:</b>\n<b><i>${description}</i></b>\n\n<a href="${url}">🔗 Read more</a>\n\n<i>Stay updated for more important news!</i> 💡`;
 }
 
 async function sendNoticeIOE(bot) {
@@ -61,4 +56,4 @@ async function sendNoticeIOM(bot) {
 
 
 
-module.exports = { compareAndSaveChatIds, sendNoticeIOE, sendNoticeIOM };
+module.exports = { compareAndSaveChatIds, sendNoticeIOE, sendNoticeIOM, sendMessagesToChatIds };

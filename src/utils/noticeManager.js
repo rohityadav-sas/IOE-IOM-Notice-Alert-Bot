@@ -53,7 +53,7 @@ async function fetchCurrentNoticesIOM() {
         return currentNotices;
     }
     catch (err) {
-        throw (err);
+        console.error(err.messsage);
     }
 }
 
