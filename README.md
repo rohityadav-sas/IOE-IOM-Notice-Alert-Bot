@@ -80,10 +80,9 @@
 ## How It Works
 
 - **Fetch Current Notices**: The bot fetches the latest notices from the IOE and IOM website using Axios and Cheerio.
-- **Fetch Saved Notices**: The bot reads previously saved notices from `IOESavedNotices.json` and `IOMSavedNotices.json`.
+- **Fetch Saved Notices**: The bot reads previously saved notices from json files.
 - **Check for New Notices**: The bot compares the current notices with the saved ones to identify any new notices.
 - **Notify Users**: If there are any new notices, the bot sends them to all registered Telegram users.
-- **Save Notices**: The bot updates `IOESavedNotices.json` and `IOMSavedNotices.json` with any new notices.
 
 ## Dependencies
 
