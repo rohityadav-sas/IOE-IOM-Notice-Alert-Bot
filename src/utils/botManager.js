@@ -30,7 +30,13 @@ async function botCallback(bot, savedNoticesPath) {
                 const date = notice.Date;
                 const description = notice.Description;
                 const url = notice.Url;
-                const message = `ㅤ\n<b>Date: </b><u><b>${date}</b></u>\n\n<b>${description}</b>\n\n<a href="${url}">Read more</a>`;
+                const message = `
+        ㅤ
+        <b>Date: </b><u><b>${date}</b></u><br><br>
+        <b>${description}</b><br><br>
+        <a href="${url}">🔗 Read more</a>
+    `;
+                const message1 = `ㅤ\n<b>Date: </b><u><b>${date}</b></u>\n\n<b>${description}</b>\n\n<a href="${url}">Read more</a>`;
                 await bot.sendMessage(chatId, message, { parse_mode: 'HTML' });
             }
         }
