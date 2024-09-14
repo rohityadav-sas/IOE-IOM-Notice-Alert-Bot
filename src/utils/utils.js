@@ -32,8 +32,7 @@ async function sendNotices(bot, fetchCurrentNotices, savedNoticesPath, chatIdsPa
 }
 
 async function sendMessagesToChatIds(bot, chatIds, notices) {
-    for (let i = 0; i < chatIds.length; i++) {
-        const chatId = chatIds[i];
+    for (const chatId of chatIds) {
         for (let j = notices.length - 1; j >= 0; j--) {
             const notice = notices[j];
             const message = formatMessage(notice);
@@ -44,7 +43,12 @@ async function sendMessagesToChatIds(bot, chatIds, notices) {
 
 function formatMessage(notice) {
     const { Date: date, Description: description, Url: url } = notice;
-    return `ㅤ\n<b>Date: </b><u><b>${date}</b></u>\n\n<b>${description}</b>\n\n<a href="${url}">Read more</a>`;
+    return `
+        ㅤ
+        <b>Date: </b><u><b>${date}</b></u><br><br>
+        <b>${description}</b><br><br>
+        <a href="${url}">🔗 Read more</a>
+    `;
 }
 
 async function sendNoticeIOE(bot) {
