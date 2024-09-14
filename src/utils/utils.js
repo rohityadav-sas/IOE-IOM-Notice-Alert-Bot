@@ -45,7 +45,7 @@ async function sendNotices(bot, fetchCurrentNotices, savedNoticesPath, chatIdsPa
         const newNotices = await checkForNewNotices(currentNotices, savedNotices, savedNoticesPath);
         if (newNotices.length > 0) {
             const chatIds = await fetchChatIds(chatIdsPath);
-            await sendMessagesToChatIds(bot, chatIds, newNotices);
+            await sendMessagesToChatIds(bot, chatIds, newNotices, chatIdsPath);
         }
     }
     catch (error) {
@@ -53,13 +53,34 @@ async function sendNotices(bot, fetchCurrentNotices, savedNoticesPath, chatIdsPa
     }
 }
 
-async function sendMessagesToChatIds(bot, chatIds, notices) {
+async function sendMessagesToChatIds(bot, chatIds, notices, chatIdsPath) {
     for (const chatId of chatIds) {
         for (let j = notices.length - 1; j >= 0; j--) {
             const notice = notices[j];
             const message = formatMessage(notice);
-            await bot.sendMessage(chatId, message, { parse_mode: 'HTML' });
+            try { await bot.sendMessage(chatId, message, { parse_mode: 'HTML' }); }
+            catch (error) {
+                if (error.response && error.response.statusCode === 403) {
+                    console.error(`User with chatId ${chatId} has blocked the bot. Removing the chatId from the database...`);
+                    await removeChatId(chatId, chatIdsPath);
+                }
+                else {
+                    console.error(`Error sending message to ${chatId}: ${error.message}`);
+                }
+            }
         }
+    }
+}
+
+async function removeChatId(chatId, chatIdsPath) {
+    try {
+        const chatIds = await fetchChatIds(chatIdsPath);
+        const updatedChatIds = chatIds.filter(id => id !== chatId);
+        fs.writeFileSync(chatIdsPath, JSON.stringify(updatedChatIds, null, 2));
+        cachedChatIds[chatIdsPath] = updatedChatIds;
+    }
+    catch (error) {
+        console.error(`Error removing chatId ${chatId} from ${chatIdsPath}: ${error.message}`);
     }
 }
 
