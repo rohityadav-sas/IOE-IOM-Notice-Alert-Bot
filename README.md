@@ -1,6 +1,6 @@
 ## IOE-IOM Notice Alert Bot
 
-**IOE-IOM Notice Alert Bot** is a Node.js Telegram bot that retrieves examination result notifications from the Institute of Engineering's (IOE) and Institute of Medicine’s (IOM) website and delivers them directly to your Telegram account when new notices are available.
+**IOE-IOM Notice Alert Bot** is a Node.js Telegram bot that scrapes and retrieves examination and official notices from the Institute of Engineering's (IOE) and Institute of Medicine’s (IOM) websites, and delivers them directly to your Telegram account when new notices are available.
 
 ## Table of Contents
 
@@ -31,10 +31,11 @@
 
 ## Features
 
-- Fetches the latest exam result notices from the IOE and IOM website.
+- Fetches the latest exam, entrance, and official notices from the IOE and IOM websites.
 - Compares the fetched notices with previously saved notices to identify new ones.
-- Sends the new notices directly to your Telegram account.
-- Welcomes users and offers the option to view previous notices.
+- Sends the new notices directly to registered Telegram users.
+- Welcomes users and offers the option to view previously saved notices.
+- Stops polling after a specific duration to adhere to GitHub Actions' free tier limitations.
 
 ## Prerequisites
 
@@ -59,7 +60,7 @@
     npm install
     ```
 
-4. Create a ```.env``` file in the root directory and add your Telegram bot token:
+4. Create a ```.env``` file in the root directory and add your Telegram bot tokens:
     ```env
     TELEGRAM_BOT_TOKEN_IOE=your-ioe-telegram-bot-token
 
@@ -79,16 +80,26 @@
 
 ## How It Works
 
-- **Fetch Current Notices**: The bot fetches the latest notices from the IOE and IOM website using Axios and Cheerio.
-- **Fetch Saved Notices**: The bot reads previously saved notices from json files.
-- **Check for New Notices**: The bot compares the current notices with the saved ones to identify any new notices.
-- **Notify Users**: If there are any new notices, the bot sends them to all registered Telegram users.
+- **Bot Initialization**: The bot initializes using the provided Telegram bot tokens for both IOE and IOM. The bots poll for updates and respond to user commands.
+
+- **Fetch Current Notices**: The bot fetches the latest notices (exam, entrance, and official notices) from IOE and IOM websites using Axios and Cheerio.
+
+- **Fetch Saved Notices**: The bot loads previously saved notices from JSON files.
+
+- **Check for New Notices**: The bot compares the fetched notices with the saved ones to identify new notices.
+
+- **Send Notices**: New notices are sent to all registered Telegram users. The messages are formatted using HTML for better readability.
+
+- **Polling and Error Handling**: The bot stops polling after a certain duration (e.g., 10 seconds) to adhere to GitHub Actions' free tier limitations.This limit prevents the bot from running indefinitely while still being able to check for updates regularly.
 
 ## Dependencies
 
 - **axios**: For making HTTP requests.
+
 - **cheerio**: For parsing HTML and extracting data.
+
 - **dotenv**: For loading environment variables.
+
 - **node-telegram-bot-api**: For interacting with the Telegram Bot API.
 
 ## License
