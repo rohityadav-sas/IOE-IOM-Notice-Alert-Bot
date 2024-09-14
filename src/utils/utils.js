@@ -1,9 +1,12 @@
 const fs = require('fs');
 const path = require('path');
-const { fetchSavedNotices, checkForNewNotices, fetchCurrentNoticesIOE, fetchCurrentNoticesIOM } = require('./noticeManager');
+const { fetchCurrentNoticesIOE } = require('../ioe/IOEUtils');
+const { fetchCurrentNoticesIOM } = require('../iom/IOMUtils');
+const { fetchSavedNotices, checkForNewNotices } = require('./noticeManager');
 const IOMExamNoticesPath = path.join(__dirname, '../iom/IOM_Exam_Notices.json');
 const IOEExamNoticesPath = path.join(__dirname, '../ioe/IOE_Exam_Notices.json');
 const IOEEntranceNoticesPath = path.join(__dirname, '../ioe/IOE_Entrance_Notices.json');
+const IOEOfficialPageNoticesPath = path.join(__dirname, '../ioe/IOE_Official_Page_Notices.json');
 const IOMChatIdsPath = path.join(__dirname, '../iom/IOMChatIds.json');
 const IOEChatIdsPath = path.join(__dirname, '../ioe/IOEChatIds.json');
 
@@ -30,7 +33,7 @@ async function compareAndSaveChatIds(chatID, chatIdsPath) {
     if (!chatIds.includes(chatID)) {
         chatIds.push(chatID);
         fs.writeFileSync(chatIdsPath, JSON.stringify(chatIds, null, 2));
-        cachedChatIds[chatIdsPath] = chatIds;  // Update cache
+        cachedChatIds[chatIdsPath] = chatIds
     }
 }
 
@@ -68,6 +71,7 @@ function formatMessage(notice) {
 async function sendNoticeIOE(bot) {
     await sendNotices(bot, fetchCurrentNoticesIOE('exam'), IOEExamNoticesPath, IOEChatIdsPath);
     await sendNotices(bot, fetchCurrentNoticesIOE('entrance'), IOEEntranceNoticesPath, IOEChatIdsPath);
+    await sendNotices(bot, fetchCurrentNoticesIOE('official'), IOEOfficialPageNoticesPath, IOEChatIdsPath);
 }
 
 async function sendNoticeIOM(bot) {

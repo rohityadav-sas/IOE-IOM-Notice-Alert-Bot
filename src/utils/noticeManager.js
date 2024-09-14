@@ -1,6 +1,4 @@
 const fs = require('fs');
-const axios = require('axios');
-const cheerio = require('cheerio');
 
 async function fetchSavedNotices(filePath) {
     try {
@@ -34,80 +32,4 @@ async function checkForNewNotices(currentNotices, savedNotices, filePath) {
     }
 }
 
-async function fetchCurrentNoticesIOM() {
-    try {
-        const currentNotices = [];
-        const result = await axios.get('http://www.iomexam.edu.np/index.php/exam/results');
-        const $ = cheerio.load(result.data);
-        const table = $('.table.table-striped.table-bordered.dTableR tbody');
-        for (let i = 0; i < 5; i++) {
-            const row = table.eq(i);
-            const date = row.find('td').eq(0).text().trim();
-            const description = row.find('td').eq(2).text().trim();
-            const url = row.find('td').eq(3).find('a').attr('href');
-            currentNotices.push({ Date: date, Description: description, Url: url });
-        }
-        return currentNotices;
-    }
-    catch (err) {
-        console.error(`Error fetching notices for IOM: ${err.response.statusText}`);
-        return [];
-    }
-}
-
-async function fetchCurrentNoticesIOE(noticeType) {
-    if (noticeType === 'exam') {
-        return await examIOE();
-    } else if (noticeType === 'entrance') {
-        return await entranceIOE();
-    }
-}
-
-// IOE: http://exam.ioe.edu.np/
-async function examIOE() {
-    try {
-        const currentNotices = [];
-        const result = await axios.get('http://exam.ioe.edu.np/');
-        const $ = cheerio.load(result.data);
-        const table = $('#datatable tbody tr');
-        for (let i = 0; i < 5; i++) {
-            const row = table.eq(i);
-            const date = row.find('td').eq(2).text().trim();
-            const description = row.find('td').eq(1).text().trim();
-            const url = 'http://exam.ioe.edu.np' + row.find('td').eq(3).find('a').eq(1).attr('href');
-            currentNotices.push({ Date: date, Description: description, Url: url });
-        }
-        return currentNotices;
-    }
-    catch (err) {
-        console.error(err);
-    }
-}
-
-// IOE: https://entrance.ioe.edu.np/
-async function entranceIOE() {
-    try {
-        const currentNotices = [];
-        const result = await axios.get('https://entrance.ioe.edu.np/Notice');
-        const $ = cheerio.load(result.data);
-        const table = $('.table.table-bordered tbody tr');
-        for (let i = 0; i < table.length; i++) {
-            const row = table.eq(i);
-            const fullNoticeUrl = 'https://entrance.ioe.edu.np' + row.find('td').eq(3).find('a').attr('href');
-            const fullNoticePage = await axios.get(fullNoticeUrl);
-            const $notice = cheerio.load(fullNoticePage.data);
-            const date = $notice('.label.label-info').text().trim().replace("Published Date: ", "");
-            const description = $notice('.well p').text().trim().replace(/ - Click Here.*$/, '');
-            const url = $notice('.well p a').attr('href');
-            currentNotices.push({ Date: date, Description: description, Url: url });
-        }
-        return currentNotices;
-    }
-    catch (err) {
-        console.error(err);
-    }
-}
-
-
-
-module.exports = { fetchSavedNotices, checkForNewNotices, fetchCurrentNoticesIOM, fetchCurrentNoticesIOE };
+module.exports = { fetchSavedNotices, checkForNewNotices };

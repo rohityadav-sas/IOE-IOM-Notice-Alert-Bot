@@ -8,6 +8,7 @@ const chatIdsPathIOM = path.join(__dirname, './iom/IOMChatIds.json');
 const IOMExamNoticesPath = path.join(__dirname, './iom/IOM_Exam_Notices.json');
 const IOEExamNoticesPath = path.join(__dirname, './ioe/IOE_Exam_Notices.json');
 const IOEEntranceNoticesPath = path.join(__dirname, './ioe/IOE_Entrance_Notices.json');
+const IOEOfficialPageNoticesPath = path.join(__dirname, './ioe/IOE_Official_Page_Notices.json');
 
 async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, botName, pollingDuration) {
     const bot = new TelegramBot(botToken, { polling: true });
@@ -29,7 +30,7 @@ async function main() {
     const pollingDuration = 10;
     try {
         await Promise.all([
-            handleBot(process.env.TELEGRAM_BOT_TOKEN_IOE, chatIdsPathIOE, [IOEExamNoticesPath, IOEEntranceNoticesPath], sendNoticeIOE, 'IOE', pollingDuration),
+            handleBot(process.env.TELEGRAM_BOT_TOKEN_IOE, chatIdsPathIOE, [IOEExamNoticesPath, IOEEntranceNoticesPath, IOEOfficialPageNoticesPath], sendNoticeIOE, 'IOE', pollingDuration),
             handleBot(process.env.TELEGRAM_BOT_TOKEN_IOM, chatIdsPathIOM, [IOMExamNoticesPath], sendNoticeIOM, 'IOM', pollingDuration)
         ]);
     } catch (error) {
