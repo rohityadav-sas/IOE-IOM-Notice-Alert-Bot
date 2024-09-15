@@ -3,6 +3,7 @@ const path = require('path');
 const { fetchCurrentNoticesIOE } = require('../ioe/IOEUtils');
 const { fetchCurrentNoticesIOM } = require('../iom/IOMUtils');
 const { fetchSavedNotices, checkForNewNotices } = require('./noticeManager');
+const { log } = require('./logger');
 const IOMExamNoticesPath = path.join(__dirname, '../iom/IOM_Exam_Notices.json');
 const IOEExamNoticesPath = path.join(__dirname, '../ioe/IOE_Exam_Notices.json');
 const IOEEntranceNoticesPath = path.join(__dirname, '../ioe/IOE_Entrance_Notices.json');
@@ -62,10 +63,12 @@ async function sendMessagesToChatIds(bot, chatIds, notices, chatIdsPath) {
             catch (error) {
                 if (error.response && error.response.statusCode === 403) {
                     console.error(`User with chatId ${chatId} has blocked the bot. Removing the chatId from the database...`);
+                    log(`User with chatId ${chatId} has blocked the bot.`);
                     await removeChatId(chatId, chatIdsPath);
                 }
                 else {
                     console.error(`Error sending message to ${chatId}: ${error.message}`);
+                    log(`Error sending message to ${chatId}: ${error.message}`);
                 }
             }
         }
@@ -101,4 +104,4 @@ async function sendNoticeIOM(bot) {
 
 
 
-module.exports = { compareAndSaveChatIds, sendNoticeIOE, sendNoticeIOM, sendMessagesToChatIds };
+module.exports = { compareAndSaveChatIds, sendNoticeIOE, sendNoticeIOM, sendMessagesToChatIds, removeChatId };

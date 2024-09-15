@@ -1,5 +1,6 @@
-const { compareAndSaveChatIds, sendMessagesToChatIds } = require('./utils');
+const { compareAndSaveChatIds, sendMessagesToChatIds, removeChatId } = require('./utils');
 const { fetchSavedNotices } = require('./noticeManager');
+const { log } = require('./logger');
 
 async function botOnStart(bot, chatIdsPath, college) {
     bot.onText('/start', async (msg) => {
@@ -7,13 +8,23 @@ async function botOnStart(bot, chatIdsPath, college) {
         let name = msg.from.first_name;
         if (msg.from.last_name) { name += ` ${msg.from.last_name}`; }
         console.log(`${name} started the ${college} bot`);
-        await bot.sendMessage(msg.chat.id, `Welcome to ${college} Notice Alert Bot.`);
-        await bot.sendMessage(msg.chat.id, "Do you want to see some previous notices?", {
-            reply_markup: {
-                inline_keyboard: [
-                    [{ text: 'Yes', callback_data: 'Yes' }, { text: 'No', callback_data: 'No' }]]
+        log(`${name} started the ${college} bot. Chat ID: ${msg.chat.id}`);
+        try {
+            await bot.sendMessage(msg.chat.id, `Welcome to ${college} Notice Alert Bot.`);
+            await bot.sendMessage(msg.chat.id, "Do you want to see some previous notices?", {
+                reply_markup: {
+                    inline_keyboard: [
+                        [{ text: 'Yes', callback_data: 'Yes' }, { text: 'No', callback_data: 'No' }]]
+                }
+            });
+        }
+        catch (error) {
+            if (error.response && error.response.statusCode === 403) {
+                console.error(`User with chatId ${msg.chat.id} has blocked the bot. Removing the chatId from the database...`);
+                log(`User with chatId ${msg.chat.id} has blocked the bot.`);
+                await removeChatId(msg.chat.id, chatIdsPath);
             }
-        });
+        }
     });
 }
 

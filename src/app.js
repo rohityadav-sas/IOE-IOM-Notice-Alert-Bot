@@ -3,6 +3,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const path = require('path');
 const { botOnStart, botCallback } = require('./utils/botManager');
 const { sendNoticeIOE, sendNoticeIOM } = require('./utils/utils');
+const { log } = require('./utils/logger');
 const chatIdsPathIOE = path.join(__dirname, './ioe/IOEChatIds.json');
 const chatIdsPathIOM = path.join(__dirname, './iom/IOMChatIds.json');
 const IOMExamNoticesPath = path.join(__dirname, './iom/IOM_Exam_Notices.json');
@@ -35,6 +36,7 @@ async function main() {
         ]);
     } catch (error) {
         console.error('An error occurred while running the bots:', error);
+        log(`Error with ${botName}: ${error.message}`);
     }
 }
 
