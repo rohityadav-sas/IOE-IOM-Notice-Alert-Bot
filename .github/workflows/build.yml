@@ -2,10 +2,10 @@ name: IOM-Notice-Alert-Bot
 
 on:
   workflow_dispatch: # Manually run the workflow
-  # push:
-  # branches: ["master"]
-  # schedule:
-  # - cron: '*/5 * * * *'
+  push:
+  branches: ["master"]
+  schedule:
+    - cron: "*/5 * * * *"
 
 jobs:
   build:

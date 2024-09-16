@@ -1,6 +1,6 @@
 {
   "name": "ioe-iom-notice-alert-bot",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js"
@@ -18,7 +18,6 @@
     "axios": "^1.7.4",
     "cheerio": "^1.0.0",
     "dotenv": "^16.4.5",
-    "node-telegram-bot-api": "^0.66.0",
-    "simple-git": "^3.26.0"
+    "node-telegram-bot-api": "^0.66.0"
   }
 }

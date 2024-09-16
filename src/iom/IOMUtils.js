@@ -1,5 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
+const { formatDate } = require('../utils/date&TimeFormatter');
 
 async function fetchCurrentNoticesIOM() {
     try {
@@ -12,12 +13,7 @@ async function fetchCurrentNoticesIOM() {
             const description = row.find('td').eq(2).text().trim();
             const url = row.find('td').eq(3).find('a').attr('href');
             let date = row.find('td').eq(0).text().trim();
-            date = new Intl.DateTimeFormat('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            }).format(new Date(date));
+            date = formatDate(date);
             currentNotices.push({ Date: date, Description: description, Url: url });
         }
         return currentNotices;
