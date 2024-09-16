@@ -44,6 +44,11 @@ jobs:
             echo "changes=true" >> $GITHUB_ENV
           fi
 
+      - name: Configure Git
+        run: |
+          git config --global user.name "Rohit Yadav"
+          git config --global user.email "rohityadav.se@gmail.com"
+
       - name: Commit Changes
         if: env.changes == 'true'
         run: |
