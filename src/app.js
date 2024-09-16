@@ -19,7 +19,7 @@ async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, 
         await sendNoticeFn(bot);
         setTimeout(() => {
             // bot.stopPolling();
-            console.log(`${botName} bot stopped polling after ${pollingDuration} seconds.`);
+            console.log(`Bot stopped polling after ${pollingDuration} seconds.`);
             process.exit(0);
         }, pollingDuration * 1000);
     } catch (error) {

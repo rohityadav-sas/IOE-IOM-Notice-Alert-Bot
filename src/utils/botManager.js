@@ -2,8 +2,16 @@ const { compareAndSaveChatIds, sendMessagesToChatIds, removeChatId } = require('
 const { fetchSavedNotices } = require('./noticeManager');
 const { log } = require('./logger');
 
+let userSessions = {};
+
 async function botOnStart(bot, chatIdsPath, college, savedNoticesPath) {
     bot.onText('/start', async (msg) => {
+        const chatId = msg.chat.id;
+        if (userSessions[chatId]) {
+            log(`User ${msg.from.first_name} with chat ID ${chatId} sent multiple '/start' messages.`);
+            return;
+        }
+        userSessions[chatId] = true;
         compareAndSaveChatIds(msg.chat.id, chatIdsPath);
         let name = msg.from.first_name;
         if (msg.from.last_name) { name += ` ${msg.from.last_name}`; }
