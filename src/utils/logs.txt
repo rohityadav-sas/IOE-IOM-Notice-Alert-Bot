@@ -2,3 +2,9 @@
 [Monday, September 16, 2024] [10:38 PM] - Error sending message to 101271123: ETELEGRAM: 400 Bad Request: chat not found
 [Monday, September 16, 2024] [10:55 PM] - Arjun Thapa started the IOE bot. Chat ID: 6305880571
 [Monday, September 16, 2024] [10:55 PM] - Rohit started the IOE bot. Chat ID: 7070127929
+[Tuesday, September 17, 2024] [03:59 AM] - Arjun Thapa started the IOE bot. Chat ID: 6305880571
+[Tuesday, September 17, 2024] [03:59 AM] - Arjun Thapa started the IOE bot. Chat ID: 6305880571
+[Tuesday, September 17, 2024] [03:59 AM] - Arjun Thapa started the IOE bot. Chat ID: 6305880571
+[Tuesday, September 17, 2024] [03:59 AM] - Rohit started the IOE bot. Chat ID: 7070127929
+[Tuesday, September 17, 2024] [03:59 AM] - Rohit started the IOE bot. Chat ID: 7070127929
+[Tuesday, September 17, 2024] [03:59 AM] - Rohit started the IOE bot. Chat ID: 7070127929
