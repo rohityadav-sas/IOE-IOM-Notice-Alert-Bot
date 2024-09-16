@@ -2,57 +2,55 @@ name: IOM-Notice-Alert-Bot
 
 on:
   workflow_dispatch: # Manually run the workflow
-  push:
-    branches: [ "master" ]
-  schedule:
-    - cron: '*/5 * * * *'
+  # push:
+  # branches: ["master"]
+  # schedule:
+  # - cron: '*/5 * * * *'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [20.x]
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Install Dependencies
-      run: npm ci
-    - name: Run the code
-      run: npm start
-      env:
-        TELEGRAM_BOT_TOKEN_IOE: ${{ secrets.TELEGRAM_BOT_TOKEN_IOE }}
-        TELEGRAM_BOT_TOKEN_IOM: ${{ secrets.TELEGRAM_BOT_TOKEN_IOM }}
-    - name: Configure Git
-      run: |
-       git config --global user.email "rohityadav.se@gmail.com"
-       git config --global user.name "Rohit Yadav"
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run the code
+        run: npm start
+        env:
+          TELEGRAM_BOT_TOKEN_IOE: ${{ secrets.TELEGRAM_BOT_TOKEN_IOE }}
+          TELEGRAM_BOT_TOKEN_IOM: ${{ secrets.TELEGRAM_BOT_TOKEN_IOM }}
+      - name: Configure Git
+        run: |
+          git config --global user.email "rohityadav.se@gmail.com"
+          git config --global user.name "Rohit Yadav"
 
-    - name: Check for Changes
-      run: |
-        git add .
-        CHANGED_FILES=$(git diff --name-only HEAD)
-        if [ -z "$CHANGED_FILES" ]; then
-          echo "No changes detected."
-          echo "changes=false" >> $GITHUB_ENV
-          echo "commit_message=No changes" >> $GITHUB_ENV
-        else
-          echo "Files changed: $CHANGED_FILES"
-          echo "changes=true" >> $GITHUB_ENV
-          echo "commit_message=Updated $CHANGED_FILES" >> $GITHUB_ENV
-        fi
-    - name: Commit Changes
-      if: ${{ env.changes == 'true' }}
-      run:
-        git commit -m "${{ env.commit_message }}"
-    - name: Push Changes
-      if: ${{env.changes == 'true'}}
-      run: git push origin HEAD:master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check for Changes
+        run: |
+          git add .
+          CHANGED_FILES=$(git diff --name-only HEAD)
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No changes detected."
+            echo "changes=false" >> $GITHUB_ENV
+            echo "commit_message=No changes" >> $GITHUB_ENV
+          else
+            echo "Files changed: $CHANGED_FILES"
+            echo "changes=true" >> $GITHUB_ENV
+            echo "commit_message=Updated $CHANGED_FILES" >> $GITHUB_ENV
+          fi
+      - name: Commit Changes
+        if: ${{ env.changes == 'true' }}
+        run: git commit -m "${{ env.commit_message }}"
+      - name: Push Changes
+        if: ${{env.changes == 'true'}}
+        run: git push origin HEAD:master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

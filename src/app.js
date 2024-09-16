@@ -17,10 +17,10 @@ async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, 
         await botOnStart(bot, chatIdsPath, botName);
         await botCallback(bot, savedNoticesPath);
         await sendNoticeFn(bot);
-        setTimeout(() => {
-            bot.stopPolling();
-            console.log(`${botName} bot stopped polling after ${pollingDuration} seconds.`);
-        }, pollingDuration * 1000);
+        // setTimeout(() => {
+        //     bot.stopPolling();
+        //     console.log(`${botName} bot stopped polling after ${pollingDuration} seconds.`);
+        // }, pollingDuration * 1000);
     } catch (error) {
         console.error(`Error with ${botName}:`, error);
         bot.stopPolling();
