@@ -12,7 +12,7 @@ function formatTime(date) {
         hour: '2-digit',
         minute: '2-digit',
         hour12: true
-    }).format(new Date(date));
+    }).format(new Date(date).getTime() + (5 * 60 + 45) * 60 * 1000);
 }
 
 module.exports = { formatDate, formatTime };
