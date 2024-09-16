@@ -28,7 +28,7 @@ async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, 
 }
 
 async function main() {
-    const pollingDuration = 1000;
+    const pollingDuration = 10;
     try {
         await Promise.all([
             handleBot(process.env.TELEGRAM_BOT_TOKEN_IOE, chatIdsPathIOE, [IOEExamNoticesPath, IOEEntranceNoticesPath, IOEOfficialPageNoticesPath, IOEAdmissionNoticesPath], sendNoticeIOE, 'IOE', pollingDuration),
