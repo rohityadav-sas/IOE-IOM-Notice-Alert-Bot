@@ -22,4 +22,4 @@ async function pushChanges() {
     }
 }
 
-pushChanges();
+module.exports = { pushChanges };

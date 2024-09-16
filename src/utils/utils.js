@@ -4,6 +4,7 @@ const { fetchCurrentNoticesIOE } = require('../ioe/IOEUtils');
 const { fetchCurrentNoticesIOM } = require('../iom/IOMUtils');
 const { fetchSavedNotices, checkForNewNotices } = require('./noticeManager');
 const { log } = require('./logger');
+const { pushChanges } = require('./auto-push');
 const IOMExamNoticesPath = path.join(__dirname, '../iom/IOM_Exam_Notices.json');
 const IOEExamNoticesPath = path.join(__dirname, '../ioe/IOE_Exam_Notices.json');
 const IOEEntranceNoticesPath = path.join(__dirname, '../ioe/IOE_Entrance_Notices.json');
@@ -46,7 +47,11 @@ async function sendNotices(bot, fetchCurrentNotices, savedNoticesPath, chatIdsPa
         const newNotices = await checkForNewNotices(currentNotices, savedNotices, savedNoticesPath);
         if (newNotices.length > 0) {
             const chatIds = await fetchChatIds(chatIdsPath);
+            newNotices.forEach(notice => {
+                log(`New notice received: ${notice.Description} (Published on: ${notice.Date})`);
+            });
             await sendMessagesToChatIds(bot, chatIds, newNotices, chatIdsPath);
+            pushChanges();
         }
     }
     catch (error) {
@@ -65,10 +70,13 @@ async function sendMessagesToChatIds(bot, chatIds, notices, chatIdsPath) {
                     console.error(`User with chatId ${chatId} has blocked the bot. Removing the chatId from the database...`);
                     log(`User with chatId ${chatId} has blocked the bot.`);
                     await removeChatId(chatId, chatIdsPath);
+                    pushChanges();
+
                 }
                 else {
                     console.error(`Error sending message to ${chatId}: ${error.message}`);
                     log(`Error sending message to ${chatId}: ${error.message}`);
+                    pushChanges();
                 }
             }
         }

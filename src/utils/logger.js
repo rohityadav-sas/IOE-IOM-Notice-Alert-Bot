@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-
+const { pushChanges } = require('./auto-push');
 const logFilePath = path.join(__dirname, 'logs.txt');
 
 function getFormattedDate() {
@@ -24,8 +24,9 @@ function getFormattedDate() {
 function log(message) {
     const timestamp = getFormattedDate();
     const logMessage = `${timestamp} - ${message}\n`;
-    console.log(logMessage); // Also log to console
+    console.log(logMessage);
     fs.appendFileSync(logFilePath, logMessage);
+    pushChanges();
 }
 
 module.exports = { log };
