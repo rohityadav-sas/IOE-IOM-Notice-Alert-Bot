@@ -1,3 +1,4 @@
 [Monday, September 16, 2024] [08:35 PM] - New notice received: Valid Quota Applicants for IoE Constituent Campus 2081 (Published on: Monday, September 16, 2024)
 [Monday, September 16, 2024] [08:35 PM] - New notice received: BE/BArch Admission 2081 Program Codes (Published on: Monday, September 16, 2024)
 [Monday, September 16, 2024] [08:44 PM] - New notice received: Valid Quota Applicants for IoE Constituent Campus 2081 (Published on: Monday, September 16, 2024)
+[Monday, September 16, 2024] [08:44 PM] - Error sending message to 101271123: ETELEGRAM: 400 Bad Request: chat not found
