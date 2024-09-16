@@ -4,7 +4,7 @@ function formatDate(date) {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
-    }).format(new Date(date));
+    }).format(new Date(date).getTime() + (5 * 60 + 45) * 60 * 1000);
 }
 
 function formatTime(date) {
