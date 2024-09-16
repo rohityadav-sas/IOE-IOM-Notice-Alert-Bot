@@ -6,6 +6,11 @@ const git = simpleGit(repoPath);
 
 async function pushChanges() {
     try {
+        const status = await git.status();
+        if (status.files.length === 0) {
+            console.log('No changes detected');
+            return;
+        }
         await git.add('.');
         await git.commit('Auto-commit: Changes detected');
         await git.push('origin', 'master');
