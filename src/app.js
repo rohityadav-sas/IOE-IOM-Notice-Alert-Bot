@@ -30,9 +30,11 @@ async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, 
 async function main() {
     const pollingDuration = 10;
     try {
+        const IOENoticesPath = [IOEExamNoticesPath, IOEEntranceNoticesPath, IOEOfficialPageNoticesPath, IOEAdmissionNoticesPath];
+        const IOMNoticesPath = [IOMExamNoticesPath];
         await Promise.all([
-            handleBot(process.env.TELEGRAM_BOT_TOKEN_IOE, chatIdsPathIOE, [IOEExamNoticesPath, IOEEntranceNoticesPath, IOEOfficialPageNoticesPath, IOEAdmissionNoticesPath], sendNoticeIOE, 'IOE', pollingDuration),
-            handleBot(process.env.TELEGRAM_BOT_TOKEN_IOM, chatIdsPathIOM, [IOMExamNoticesPath], sendNoticeIOM, 'IOM', pollingDuration)
+            handleBot(process.env.TELEGRAM_BOT_TOKEN_IOE, chatIdsPathIOE, IOENoticesPath, sendNoticeIOE, 'IOE', pollingDuration),
+            handleBot(process.env.TELEGRAM_BOT_TOKEN_IOM, chatIdsPathIOM, IOMNoticesPath, sendNoticeIOM, 'IOM', pollingDuration)
         ]);
     } catch (error) {
         console.error('An error occurred while running the bots:', error);
