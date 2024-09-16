@@ -28,7 +28,7 @@ async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, 
 }
 
 async function main() {
-    const pollingDuration = 10;
+    const pollingDuration = 7;
     try {
         const IOENoticesPath = [IOEExamNoticesPath, IOEEntranceNoticesPath, IOEOfficialPageNoticesPath, IOEAdmissionNoticesPath];
         const IOMNoticesPath = [IOMExamNoticesPath];
