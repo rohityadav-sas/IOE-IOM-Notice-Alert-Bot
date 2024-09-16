@@ -36,7 +36,7 @@ async function entranceIOE() {
             const fullNoticePage = await axios.get(fullNoticeUrl);
             const $notice = cheerio.load(fullNoticePage.data);
             const date = $notice('.label.label-info').text().trim().replace("Published Date: ", "");
-            const description = $notice('.well p').text().trim().replace(/ - Click Here.*$/, '');
+            const description = $notice('.well p').text().trim().replace(/ - Click Here.*$/, '').trim();
             const url = $notice('.well p a').attr('href');
             currentNotices.push({ Date: date, Description: description, Url: url });
         }
