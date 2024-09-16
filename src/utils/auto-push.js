@@ -1,7 +1,7 @@
 const simpleGit = require('simple-git');
 const path = require('path');
 
-const repoPath = path.resolve(__dirname, '..');
+const repoPath = path.resolve(__dirname, '..', '..');
 const git = simpleGit(repoPath);
 
 async function pushChanges() {
