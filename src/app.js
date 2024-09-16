@@ -18,12 +18,14 @@ async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, 
         await botOnStart(bot, chatIdsPath, botName, savedNoticesPath);
         await sendNoticeFn(bot);
         setTimeout(() => {
-            bot.stopPolling();
+            // bot.stopPolling();
             console.log(`${botName} bot stopped polling after ${pollingDuration} seconds.`);
+            process.exit(0);
         }, pollingDuration * 1000);
     } catch (error) {
         console.error(`Error with ${botName}:`, error);
-        bot.stopPolling();
+        // bot.stopPolling();
+        process.exit(1);
     }
 }
 
@@ -39,6 +41,7 @@ async function main() {
     } catch (error) {
         console.error('An error occurred while running the bots:', error);
         log(`Error with ${botName}: ${error.message}`);
+        process.exit(1);
     }
 }
 
