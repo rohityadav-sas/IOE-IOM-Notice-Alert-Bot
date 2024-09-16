@@ -1,2 +1,4 @@
 [Monday, September 16, 2024] [10:38 PM] - New notice received: BE/BArch. Entrance Result-2081 (Published on: Saturday, September 7, 2024)
 [Monday, September 16, 2024] [10:38 PM] - Error sending message to 101271123: ETELEGRAM: 400 Bad Request: chat not found
+[Monday, September 16, 2024] [10:55 PM] - Arjun Thapa started the IOE bot. Chat ID: 6305880571
+[Monday, September 16, 2024] [10:55 PM] - Rohit started the IOE bot. Chat ID: 7070127929
