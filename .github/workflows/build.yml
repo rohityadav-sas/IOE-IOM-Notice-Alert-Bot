@@ -45,6 +45,7 @@ jobs:
           fi
 
       - name: Configure Git
+        if: env.changes == 'true'
         run: |
           git config --global user.name "Rohit Yadav"
           git config --global user.email "rohityadav.se@gmail.com"
