@@ -14,7 +14,7 @@ async function botOnStart(bot, chatIdsPath, college) {
             const token = jwt.sign({ user: 'simple' }, process.env.JWT_SECRET, {
                 expiresIn: '5m'
             })
-            await bot.sendMessage(msg.chat.id, 'Click here:', {
+            await bot.sendMessage(msg.chat.id, 'View logs:', {
                 reply_markup: {
                     inline_keyboard: [[
                         { text: 'Logs', web_app: { url: `https://ioe-iom-notice-alert-bot.onrender.com/logs/?token=${token}`, hide_url: true } }
