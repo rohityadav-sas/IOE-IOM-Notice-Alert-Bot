@@ -6,7 +6,7 @@ const logsRouter = express.Router();
 const logsFilePath = path.join(__dirname, '..', 'utils', 'logs.txt');
 
 logsRouter.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'logs.html'));
+    res.sendFile(path.join(__dirname, '..', 'public', 'logs', 'logs.html'));
 });
 
 logsRouter.get('/logs-content', (req, res) => {

@@ -2,7 +2,8 @@ const express = require('express');
 const loginRouter = express.Router();
 const fs = require('fs');
 const path = require('path');
-const loginFile = path.join(__dirname, '..', 'public', 'login.html');
+const loginFile = path.join(__dirname, '..', 'public', 'login', 'login.html');
+const jwt = require('jsonwebtoken');
 
 loginRouter.get('/login', (req, res) => {
     fs.readFile(loginFile, 'utf8', (err, data) => {
@@ -17,10 +18,11 @@ loginRouter.get('/login', (req, res) => {
 loginRouter.post('/login', (req, res) => {
     const { username, password } = req.body;
     if (username === process.env.USER && password === process.env.PASSWORD) {
-        res.cookie('auth', 'authenticated', { httpOnly: true });
-        return res.status(200).send('Authenticated');
+        const token = jwt.sign({ username }, process.env.JWT_SECRET);
+        res.cookie('auth', token);
+        return res.status(200).send();
     } else {
-        return res.status(401).send('Invalid credentials');
+        return res.status(401).send();
     }
 });
 

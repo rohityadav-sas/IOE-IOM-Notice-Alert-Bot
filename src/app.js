@@ -15,7 +15,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', async (req, res) => {
-    res.status(200).send('Bot is running');
+    res.status(200).json({
+        status: 'Service is running'
+    });
 });
 
 app.use('/logs', basicAuth, logRoutes);
