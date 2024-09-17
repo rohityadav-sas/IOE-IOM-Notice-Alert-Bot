@@ -9,7 +9,12 @@ function clearLogs() {
 }
 
 function searchLogs() {
-    fetch('/logs/logs-content').then(response => response.text()).then(logs => {
+    let query = window.location.search.substring(1);
+    let endpoint = '/logs/getlogs';
+    if (query) {
+        endpoint += '?' + query;
+    }
+    fetch(endpoint).then(response => response.text()).then(logs => {
         const searchTerm = searchInput.value.toLowerCase();
         const logLines = logs.split('\n');
         const filteredLogs = logLines.filter(line => line.toLowerCase().includes(searchTerm));
@@ -45,18 +50,22 @@ async function loadLogs() {
 loadLogs();
 
 function toggleAutoRefresh() {
-    if (autoRefreshToggle.checked) {
+    if (autoRefreshToggle.checked && searchInput.value === '') {
         autoRefreshInterval = setInterval(loadLogs, 1000);
     } else {
         clearInterval(autoRefreshInterval);
     }
 }
 
-
-searchInput.addEventListener('keyup', (e) => {
-    if (e.key === 'Enter') {
-        searchLogs();
+searchInput.addEventListener('input', () => {
+    if (searchInput.value === '' && autoRefreshToggle.checked) {
+        toggleAutoRefresh();
     }
+    else {
+        clearInterval(autoRefreshInterval);
+    }
+    searchLogs();
 });
+
 
 autoRefreshToggle.addEventListener('change', toggleAutoRefresh);

@@ -26,11 +26,13 @@
         <div class="controls">
             <input type="text" id="searchInput" placeholder="Search logs..." autocomplete="off">
             <button onclick="searchLogs()">Search</button>
-            <button onclick="window.location.href='/logs/download'">Download Logs</button>
-            <button onclick="clearLogs()">Clear Logs</button>
+        </div>
+        <pre id="logsContent"></pre>
+        <div class="controlbutton">
+            <button id="download" onclick="window.location.href='/logs/download'">Download Logs</button>
+            <button id="clear" onclick="clearLogs()">Clear Logs</button>
         </div>
 
-        <pre id="logsContent"></pre>
 
     </div>
 </body>

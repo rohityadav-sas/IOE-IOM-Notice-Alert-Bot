@@ -19,7 +19,7 @@ function getFormattedDate() {
 
 function log(message, color = 'yellow') {
     const timestamp = getFormattedDate();
-    const logMessage = `${timestamp} - ${message}\n`;
+    const logMessage = `${timestamp} - ${message}\n\n`;
     const colorCode = colorCodes[color];
     console.log(`${colorCode}%s${colorCodes.reset}`, logMessage);
     fs.appendFileSync(logFilePath, logMessage);

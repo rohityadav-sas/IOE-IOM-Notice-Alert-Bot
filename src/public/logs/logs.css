@@ -49,6 +49,7 @@ input[type="text"] {
 
 button {
     cursor: pointer;
+    width: 10rem;
 }
 
 
@@ -75,9 +76,7 @@ input[type="text"]::placeholder {
     background-color: #252525;
     padding: 20px;
     border-radius: 5px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    height: 60vh;
+    height: 55vh;
     overflow-y: auto;
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.9rem;
@@ -88,6 +87,7 @@ input[type="text"]::placeholder {
     background-color: #61dafb;
     color: #1e1e1e;
 }
+
 
 .switch {
     position: relative;
@@ -132,4 +132,19 @@ input:checked+.slider {
 
 input:checked+.slider:before {
     transform: translateX(26px);
+}
+
+.controlbutton {
+    margin-top: 1rem;
+    display: flex;
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .controlbutton {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+    }
 }
