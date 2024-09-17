@@ -7,7 +7,17 @@ async function botOnStart(bot, chatIdsPath, college) {
     bot.onText('/start', async (msg) => {
         await handleNewUser(bot, msg, chatIdsPath, college);
     });
+    bot.onText(/logs/i, async (msg) => {
+        await bot.sendMessage(msg.chat.id, 'Click here:', {
+            reply_markup: {
+                inline_keyboard: [[
+                    { text: 'Logs', web_app: { url: 'https://www.youtube.com', hide_url: true } }
+                ]]
+            }
+        })
+    });
 }
+
 
 async function botOnCallback(bot, chatIdsPath, college, savedNoticesPath) {
     bot.on('callback_query', async (query) => {

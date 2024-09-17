@@ -1,45 +1,135 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    line-height: 1.6;
+    padding: 20px;
 }
 
-pre {
-    background-color: #f4f4f4;
-    padding: 10px;
-    border: 1px solid #ccc;
-    max-height: 450px;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #333;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #61dafb;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+button,
+input[type="text"] {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: text;
+    transition: all 0.3s ease;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+button {
+    background-color: #61dafb;
+    color: #1e1e1e;
+}
+
+button:hover {
+    background-color: #4fa8c7;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+input[type="text"]::placeholder {
+    color: #888;
+}
+
+#logsContent {
+    background-color: #252525;
+    padding: 20px;
+    border-radius: 5px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    height: 60vh;
     overflow-y: auto;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    line-height: 1.4;
 }
 
-#download {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
+.highlight {
+    background-color: #61dafb;
+    color: #1e1e1e;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
 }
 
-#download:hover {
-    background-color: #45a049;
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
 }
 
-button {
-    padding: 10px 20px;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+input:checked+.slider {
+    background-color: #61dafb;
 }
 
-#clear {
-    background-color: red;
-}
-
-#clear:hover {
-    background-color: #d11a1a;
-}
-
-button {
-    margin-right: 10px;
+input:checked+.slider:before {
+    transform: translateX(26px);
 }

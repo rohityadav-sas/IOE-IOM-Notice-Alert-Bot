@@ -1,15 +1,15 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const router = express.Router();
+const logsRouter = express.Router();
 
 const logsFilePath = path.join(__dirname, '..', 'utils', 'logs.txt');
 
-router.get('/', (req, res) => {
+logsRouter.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'logs.html'));
 });
 
-router.get('/logs-content', (req, res) => {
+logsRouter.get('/logs-content', (req, res) => {
     fs.readFile(logsFilePath, 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading log file:', err);
@@ -19,7 +19,7 @@ router.get('/logs-content', (req, res) => {
     });
 });
 
-router.get('/download', (req, res) => {
+logsRouter.get('/download', (req, res) => {
     res.download(logsFilePath, 'logs.txt', (err) => {
         if (err) {
             console.error('Error downloading file:', err);
@@ -28,7 +28,7 @@ router.get('/download', (req, res) => {
     });
 });
 
-router.post('/clear', (req, res) => {
+logsRouter.post('/clear', (req, res) => {
     fs.writeFile(logsFilePath, '', (err) => {
         if (err) {
             console.error('Error clearing logs:', err);
@@ -39,4 +39,4 @@ router.post('/clear', (req, res) => {
     });
 });
 
-module.exports = router;
+module.exports = logsRouter;

@@ -5,15 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logs</title>
+    <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="logs.css">
     <script src="logs.js" defer></script>
 </head>
 
 <body>
-    <h1>Logs</h1>
-    <pre id="logsContent"></pre>
-    <button onclick="window.location.href='/logs/download'" id="download">Download Logs</button>
-    <button onclick="clearLogs()" id="clear">Clear Logs</button>
+    <div class="container">
+        <header>
+            <h1>Logs</h1>
+            <div class="auto-refresh">
+                <span>Auto-refresh</span>
+                <label class="switch">
+                    <input type="checkbox" id="autoRefresh">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </header>
+
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="Search logs..." autocomplete="off">
+            <button onclick="searchLogs()">Search</button>
+            <button onclick="window.location.href='/logs/download'">Download Logs</button>
+            <button onclick="clearLogs()">Clear Logs</button>
+        </div>
+
+        <pre id="logsContent"></pre>
+
+    </div>
 </body>
 
 </html>
