@@ -12,7 +12,7 @@ async function botOnStart(bot, chatIdsPath, college) {
     bot.onText(/logs/i, async (msg) => {
         if (msg.chat.id.toString() === '7070127929') {
             const token = jwt.sign({ user: 'simple' }, process.env.JWT_SECRET, {
-                expiresIn: '1m'
+                expiresIn: '5m'
             })
             await bot.sendMessage(msg.chat.id, 'Click here:', {
                 reply_markup: {

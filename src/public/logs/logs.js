@@ -3,13 +3,18 @@ const searchInput = document.getElementById('searchInput');
 const autoRefreshToggle = document.getElementById('autoRefresh');
 let autoRefreshInterval;
 
+let query = window.location.search.substring(1);
+
 function clearLogs() {
+    let endpoint = '/logs/clear';
+    if (query) {
+        endpoint += '?' + query;
+    }
     document.getElementById('logsContent').innerText = '';
-    fetch('/logs/clear', { method: 'POST' })
+    fetch(endpoint, { method: 'POST' })
 }
 
 function searchLogs() {
-    let query = window.location.search.substring(1);
     let endpoint = '/logs/getlogs';
     if (query) {
         endpoint += '?' + query;
@@ -22,14 +27,7 @@ function searchLogs() {
     }).catch(error => console.error('Error fetching logs:', error));
 }
 
-searchInput.addEventListener('keyup', (e) => {
-    if (e.key === 'Enter') {
-        searchLogs();
-    }
-});
-
 async function loadLogs() {
-    let query = window.location.search.substring(1);
     try {
         let endpoint = '/logs/getlogs';
         if (query) {
@@ -65,6 +63,19 @@ searchInput.addEventListener('input', () => {
         clearInterval(autoRefreshInterval);
     }
     searchLogs();
+});
+
+download.addEventListener('click', () => {
+    let endpoint = '/logs/download';
+    if (query) {
+        endpoint += '?' + query;
+    }
+    if (logsContent.innerText === '') {
+        alert("No logs to download");
+    }
+    else {
+        window.location.href = endpoint;
+    }
 });
 
 
