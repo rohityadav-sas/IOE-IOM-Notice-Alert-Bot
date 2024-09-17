@@ -11,7 +11,7 @@ async function botOnStart(bot, chatIdsPath, college) {
         await bot.sendMessage(msg.chat.id, 'Click here:', {
             reply_markup: {
                 inline_keyboard: [[
-                    { text: 'Logs', web_app: { url: 'https://www.youtube.com', hide_url: true } }
+                    { text: 'Logs', web_app: { url: 'https://ioe-iom-notice-alert-bot.onrender.com/logs/', hide_url: true } }
                 ]]
             }
         })
