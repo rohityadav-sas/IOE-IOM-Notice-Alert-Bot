@@ -11,7 +11,7 @@ async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, 
         await botOnCallback(bot, chatIdsPath, botName, savedNoticesPath);
         setInterval(async () => {
             await sendNoticeFn(bot);
-        }, 1000);
+        }, 1000 * 5 * 60);
     } catch (error) {
         console.error(`Error with ${botName}:`, error);
     }
