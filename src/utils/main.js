@@ -9,6 +9,7 @@ async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, 
     try {
         await botOnStart(bot, chatIdsPath, botName);
         await botOnCallback(bot, chatIdsPath, botName, savedNoticesPath);
+        sendNoticeFn(bot);
         setInterval(async () => {
             await sendNoticeFn(bot);
         }, 1000 * 5 * 60);
