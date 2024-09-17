@@ -9,7 +9,7 @@ logsRouter.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'logs', 'logs.html'));
 });
 
-logsRouter.get('/logs-content', (req, res) => {
+logsRouter.get('/getlogs', (req, res) => {
     fs.readFile(logsFilePath, 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading log file:', err);

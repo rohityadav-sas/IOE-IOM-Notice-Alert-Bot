@@ -24,8 +24,13 @@ searchInput.addEventListener('keyup', (e) => {
 });
 
 async function loadLogs() {
+    let query = window.location.search.substring(1);
     try {
-        const response = await fetch('/logs/logs-content');
+        let endpoint = '/logs/getlogs';
+        if (query) {
+            endpoint += '?' + query;
+        }
+        const response = await fetch(endpoint);
         if (response.ok) {
             const logs = await response.text();
             logsContent.textContent = logs;

@@ -2,19 +2,29 @@ const { sendMessagesToChatIds } = require('./noticeSender');
 const { fetchSavedNotices } = require('./noticeManager');
 const { log } = require('./logger');
 const { extractName, compareAndSaveChatIds, removeChatId } = require('./chatIdManager');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 async function botOnStart(bot, chatIdsPath, college) {
     bot.onText('/start', async (msg) => {
         await handleNewUser(bot, msg, chatIdsPath, college);
     });
     bot.onText(/logs/i, async (msg) => {
-        await bot.sendMessage(msg.chat.id, 'Click here:', {
-            reply_markup: {
-                inline_keyboard: [[
-                    { text: 'Logs', web_app: { url: 'https://ioe-iom-notice-alert-bot.onrender.com/logs/', hide_url: true } }
-                ]]
-            }
-        })
+        if (msg.chat.id.toString() === '7070127929') {
+            const token = jwt.sign({ user: 'simple' }, process.env.JWT_SECRET, {
+                expiresIn: '1m'
+            })
+            await bot.sendMessage(msg.chat.id, 'Click here:', {
+                reply_markup: {
+                    inline_keyboard: [[
+                        { text: 'Logs', web_app: { url: `https://ioe-iom-notice-alert-bot.onrender.com/logs/?token=${token}`, hide_url: true } }
+                    ]]
+                }
+            })
+        }
+        else {
+            await bot.sendMessage(msg.chat.id, 'You are not authorized to view the logs.');
+        }
     });
 }
 
