@@ -1,31 +1,11 @@
-const fs = require('fs');
 const { sendMessagesToChatIds } = require('./noticeSender');
 const { fetchSavedNotices } = require('./noticeManager');
 const { log } = require('./logger');
 const { extractName, compareAndSaveChatIds, removeChatId } = require('./chatIdManager');
 
-
 async function botOnStart(bot, chatIdsPath, college) {
     bot.onText('/start', async (msg) => {
-        await compareAndSaveChatIds(msg.chat.id, chatIdsPath);
-        const name = await extractName(msg);
-        log(`${name} started the ${college} bot. Chat ID: ${msg.chat.id}`);
-
-        try {
-            await bot.sendMessage(msg.chat.id, `Welcome to ${college} Notice Alert Bot.`);
-            await bot.sendMessage(msg.chat.id, 'Do you want to see some latest notices?', {
-                reply_markup: {
-                    inline_keyboard: [
-                        [{ text: '✅ Yes', callback_data: 'latest' }, { text: '❌ No', callback_data: 'no' }]
-                    ]
-                }
-            });
-        } catch (error) {
-            if (error.response?.statusCode === 403) {
-                log(`User with chatId ${msg.chat.id} has blocked the bot.`, 'red');
-                await removeChatId(msg.chat.id, chatIdsPath);
-            }
-        }
+        await handleNewUser(bot, msg, chatIdsPath, college);
     });
 }
 
@@ -34,58 +14,78 @@ async function botOnCallback(bot, chatIdsPath, college, savedNoticesPath) {
         const { chat, message_id } = query.message;
         const chatId = chat.id;
         await bot.deleteMessage(chatId, message_id);
+
         const name = await extractName(query);
-        try {
-            if (query.data === 'latest') {
-                log(`${name} requested for latest notices`);
-                await handleLatestNotices(bot, chatId, college, savedNoticesPath, chatIdsPath);
-            } else if (query.data === 'no') {
-                log(`${name} declined to see the latest notices`);
-                await bot.sendMessage(chatId, createSubscriptionMessage(college), {
-                    parse_mode: 'HTML'
-                });
-            }
-        } catch (error) {
-            if (error.response?.statusCode === 403) {
-                log(`User with chatId ${chatId} has blocked the bot.`, 'red');
-                await removeChatId(chatId, chatIdsPath);
-            }
-            else {
-                console.error(`Error handling callback query: ${error.message}`);
-            }
+        const queryData = query.data;
+
+        log(`${name} selected: ${queryData === 'latest' ? 'Latest Notices' : 'No'}`);
+
+        if (queryData === 'latest') {
+            await handleLatestNotices(bot, chatId, college, savedNoticesPath, chatIdsPath, name);
+        } else if (queryData === 'no') {
+            await sendSubscriptionMessage(bot, chatId, college, chatIdsPath, name);
         }
     });
 }
 
-async function handleLatestNotices(bot, chatId, college, savedNoticesPath, chatIdsPath) {
+async function handleNewUser(bot, msg, chatIdsPath, college) {
+    const chatId = msg.chat.id;
+    await compareAndSaveChatIds(chatId, chatIdsPath);
+
+    const name = await extractName(msg);
+    log(`${name} started the ${college} bot. Chat ID: ${chatId}`);
+
+    try {
+        await bot.sendMessage(chatId, `Welcome to ${college} Notice Alert Bot.`);
+        await bot.sendMessage(chatId, 'Do you want to see some latest notices?', {
+            reply_markup: {
+                inline_keyboard: [
+                    [{ text: '✅ Yes', callback_data: 'latest' }, { text: '❌ No', callback_data: 'no' }]
+                ]
+            }
+        });
+    } catch (error) {
+        await handleBotError(chatId, error, chatIdsPath);
+    }
+}
+
+async function handleLatestNotices(bot, chatId, college, savedNoticesPath, chatIdsPath, name) {
     try {
         await bot.sendMessage(chatId, `📢 <b>Here are some latest Notices:</b>\n\n`, { parse_mode: 'HTML' });
+
         for (const path of savedNoticesPath) {
             const savedNotices = await fetchSavedNotices(path);
             if (savedNotices.length > 0) {
                 await sendMessagesToChatIds(bot, [chatId], [savedNotices[0]], chatIdsPath);
             }
         }
-
-        await bot.sendMessage(
-            chatId,
-            `✅ Subscription Confirmed!\n\n` +
-            `📢 You will now receive all important notices from <b>${college}</b> as soon as they are published.\n\n` +
-            `Stay tuned for the latest updates! 🚀`,
-            { parse_mode: 'HTML' }
-        );
+        await sendSubscriptionMessage(bot, chatId, college, chatIdsPath, name);
     } catch (error) {
-        if (error.response?.statusCode === 403) {
-            log(`User with chatId ${chatId} has blocked the bot.`, 'red');
-            await removeChatId(chatId, chatIdsPath);
-        }
+        await handleBotError(chatId, error, chatIdsPath, name);
     }
 }
 
-function createSubscriptionMessage(college) {
-    return `✅ You are all set!\n\n` +
-        `📢 You will receive all important notices from <b>${college}</b> as soon as they are published.\n\n` +
-        `Stay tuned for the latest updates! 🚀`;
+async function sendSubscriptionMessage(bot, chatId, college, chatIdsPath, name) {
+    try {
+        await bot.sendMessage(
+            chatId,
+            `✅ You are all set!\n\n` +
+            `📢 You will now receive all important notices from <b>${college}</b> as soon as they are published.\n\n` +
+            `<i>Stay tuned for the latest updates! 🚀</i>`,
+            { parse_mode: 'HTML' }
+        );
+    } catch (error) {
+        await handleBotError(chatId, error, chatIdsPath, name);
+    }
+}
+
+async function handleBotError(chatId, error, chatIdsPath, name) {
+    if (error.response?.statusCode === 403) {
+        log(`User ${name} with chatId ${chatId} has blocked the bot.`, 'red');
+        await removeChatId(chatId, chatIdsPath);
+    } else {
+        console.error(`Error: ${error.message}`);
+    }
 }
 
 module.exports = { botOnStart, botOnCallback };

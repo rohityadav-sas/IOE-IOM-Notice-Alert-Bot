@@ -31,11 +31,12 @@
 
 ## Features
 
-- Fetches the latest exam, entrance, and official notices from the IOE and IOM websites.
+- Fetches the latest exam, entrance, official, and admission notices from the IOE and IOM websites.
 - Compares the fetched notices with previously saved notices to identify new ones.
 - Sends the new notices directly to registered Telegram users.
 - Welcomes users and offers the option to view previously saved notices.
 - Stops polling after a specific duration to adhere to GitHub Actions' free tier limitations.
+- Provides a web interface to view and download logs.
 
 ## Prerequisites
 
@@ -60,11 +61,15 @@
     npm install
     ```
 
-4. Create a ```.env``` file in the root directory and add your Telegram bot tokens:
+4. Create a ```.env``` file in the root directory and add your Telegram bot tokens and authentication credentials:
     ```env
     TELEGRAM_BOT_TOKEN_IOE=your-ioe-telegram-bot-token
 
     TELEGRAM_BOT_TOKEN_IOM=your-iom-telegram-bot-token
+
+    USER=your-username
+
+    PASSWORD=your-password
     ```
 
 ## Usage
@@ -82,7 +87,7 @@
 
 - **Bot Initialization**: The bot initializes using the provided Telegram bot tokens for both IOE and IOM. The bots poll for updates and respond to user commands.
 
-- **Fetch Current Notices**: The bot fetches the latest notices (exam, entrance, and official notices) from IOE and IOM websites using Axios and Cheerio.
+- **Fetch Current Notices**: The bot fetches the latest notices (exam, entrance, official, and admission notices) from IOE and IOM websites using Axios and Cheerio.
 
 - **Fetch Saved Notices**: The bot loads previously saved notices from JSON files.
 
@@ -90,9 +95,11 @@
 
 - **Send Notices**: New notices are sent to all registered Telegram users. The messages are formatted using HTML for better readability.
 
-- **Polling and Error Handling**: The bot stops polling after a certain duration (e.g., 10 seconds) to adhere to GitHub Actions' free tier limitations.This limit prevents the bot from running indefinitely while still being able to check for updates regularly.
+- **Web Interface for Logs**: The bot provides a web interface to view and download logs. The logs can be accessed at `/logs`.
 
 ## Dependencies
+
+- **express**: For handling HTTP requests and routing.
 
 - **axios**: For making HTTP requests.
 
