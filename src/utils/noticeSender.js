@@ -1,44 +1,9 @@
-const fs = require('fs');
-const path = require('path');
 const { fetchCurrentNoticesIOE } = require('../ioe/IOEUtils');
 const { fetchCurrentNoticesIOM } = require('../iom/IOMUtils');
 const { fetchSavedNotices, checkForNewNotices } = require('./noticeManager');
+const { fetchChatIds, removeChatId } = require('./chatIdManager');
 const { log } = require('./logger');
-const IOMExamNoticesPath = path.join(__dirname, '../iom/IOM_Exam_Notices.json');
-const IOEExamNoticesPath = path.join(__dirname, '../ioe/IOE_Exam_Notices.json');
-const IOEEntranceNoticesPath = path.join(__dirname, '../ioe/IOE_Entrance_Notices.json');
-const IOEOfficialPageNoticesPath = path.join(__dirname, '../ioe/IOE_Official_Page_Notices.json');
-const IOEAdmissionNoticesPath = path.join(__dirname, '../ioe/IOE_Admission_Notices.json');
-const IOMChatIdsPath = path.join(__dirname, '../iom/IOMChatIds.json');
-const IOEChatIdsPath = path.join(__dirname, '../ioe/IOEChatIds.json');
-
-
-let cachedChatIds = {};
-
-async function fetchChatIds(chatIdsPath) {
-    if (cachedChatIds[chatIdsPath]) {
-        return cachedChatIds[chatIdsPath];
-    }
-
-    try {
-        const chatIds = JSON.parse(fs.readFileSync(chatIdsPath, 'utf-8')) || [];
-        cachedChatIds[chatIdsPath] = chatIds;
-        return chatIds;
-    } catch (error) {
-        console.error(`Error reading chat IDs from ${chatIdsPath}: ${error.message}`);
-        return [];
-    }
-}
-
-async function compareAndSaveChatIds(chatID, chatIdsPath) {
-    const chatIds = await fetchChatIds(chatIdsPath);
-    if (!chatIds.includes(chatID)) {
-        chatIds.push(chatID);
-        fs.writeFileSync(chatIdsPath, JSON.stringify(chatIds, null, 2));
-        cachedChatIds[chatIdsPath] = chatIds
-    }
-}
-
+const paths = require('./filePaths');
 
 async function sendNotices(bot, fetchCurrentNotices, savedNoticesPath, chatIdsPath) {
     try {
@@ -66,29 +31,15 @@ async function sendMessagesToChatIds(bot, chatIds, notices, chatIdsPath) {
             try { await bot.sendMessage(chatId, message, { parse_mode: 'HTML' }); }
             catch (error) {
                 if (error.response && error.response.statusCode === 403) {
-                    console.error(`User with chatId ${chatId} has blocked the bot. Removing the chatId from the database...`);
-                    log(`User with chatId ${chatId} has blocked the bot.`);
+                    log(`User with chatId ${chatId} has blocked the bot.`, 'red');
                     await removeChatId(chatId, chatIdsPath);
 
                 }
                 else {
-                    console.error(`Error sending message to ${chatId}: ${error.message}`);
-                    log(`Error sending message to ${chatId}: ${error.message}`);
+                    log(`Error sending message to ${chatId}: ${error.message}`, 'red');
                 }
             }
         }
-    }
-}
-
-async function removeChatId(chatId, chatIdsPath) {
-    try {
-        const chatIds = await fetchChatIds(chatIdsPath);
-        const updatedChatIds = chatIds.filter(id => id !== chatId);
-        fs.writeFileSync(chatIdsPath, JSON.stringify(updatedChatIds, null, 2));
-        cachedChatIds[chatIdsPath] = updatedChatIds;
-    }
-    catch (error) {
-        console.error(`Error removing chatId ${chatId} from ${chatIdsPath}: ${error.message}`);
     }
 }
 
@@ -98,14 +49,14 @@ function formatMessage(notice) {
 }
 
 async function sendNoticeIOE(bot) {
-    await sendNotices(bot, fetchCurrentNoticesIOE('exam'), IOEExamNoticesPath, IOEChatIdsPath);
-    await sendNotices(bot, fetchCurrentNoticesIOE('entrance'), IOEEntranceNoticesPath, IOEChatIdsPath);
-    await sendNotices(bot, fetchCurrentNoticesIOE('official'), IOEOfficialPageNoticesPath, IOEChatIdsPath);
-    await sendNotices(bot, fetchCurrentNoticesIOE('admission'), IOEAdmissionNoticesPath, IOEChatIdsPath);
+    await sendNotices(bot, fetchCurrentNoticesIOE('exam'), paths.IOEExamNoticesPath, paths.chatIdsPathIOE);
+    await sendNotices(bot, fetchCurrentNoticesIOE('entrance'), paths.IOEEntranceNoticesPath, paths.chatIdsPathIOE);
+    await sendNotices(bot, fetchCurrentNoticesIOE('official'), paths.IOEOfficialPageNoticesPath, paths.chatIdsPathIOE);
+    await sendNotices(bot, fetchCurrentNoticesIOE('admission'), paths.IOEAdmissionNoticesPath, paths.chatIdsPathIOE);
 }
 
 async function sendNoticeIOM(bot) {
-    await sendNotices(bot, fetchCurrentNoticesIOM(), IOMExamNoticesPath, IOMChatIdsPath);
+    await sendNotices(bot, fetchCurrentNoticesIOM(), paths.IOMExamNoticesPath, paths.chatIdsPathIOM);
 }
 
-module.exports = { compareAndSaveChatIds, sendNoticeIOE, sendNoticeIOM, sendMessagesToChatIds, removeChatId };
+module.exports = { sendNoticeIOE, sendNoticeIOM, sendMessagesToChatIds };
