@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const { main } = require('./utils/bot');
+const { main } = require('./utils/main');
 const logRoutes = require('./routes/logs');
 const basicAuth = require('./middlewares/auth');
 
