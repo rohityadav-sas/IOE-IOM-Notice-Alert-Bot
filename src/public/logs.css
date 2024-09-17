@@ -11,14 +11,35 @@ pre {
     overflow-y: auto;
 }
 
-button {
+#download {
     padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
+#download:hover {
     background-color: #45a049;
+}
+
+button {
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#clear {
+    background-color: red;
+}
+
+#clear:hover {
+    background-color: #d11a1a;
+}
+
+button {
+    margin-right: 10px;
 }
