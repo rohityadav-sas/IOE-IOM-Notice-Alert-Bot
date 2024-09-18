@@ -17,6 +17,12 @@ async function pushChanges(message) {
         await git.checkout('master');
         await git.branch(['--set-upstream-to=origin/master', 'master']);
 
+        const status = await git.status();
+        if (status.files.length === 0) {
+            console.log('No changes detected. Skipping commit and push.');
+            return;
+        }
+
         await git.add('./*');
         await git.commit(message);
         await git.push('origin', 'master');
