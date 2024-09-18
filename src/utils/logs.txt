@@ -26,3 +26,5 @@
 
 [Thursday, September 19, 2024] [03:51 AM] - Error sending message to 101271123: ETELEGRAM: 400 Bad Request: chat not found
 
+[Thursday, September 19, 2024] [03:51 AM] - Error sending message to 586595986: ETELEGRAM: 400 Bad Request: chat not found
+
