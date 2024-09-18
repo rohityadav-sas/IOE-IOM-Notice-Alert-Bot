@@ -19,8 +19,8 @@ async function pushChanges(message) {
 
         await git.add('./*');
         await git.commit(message);
-
         await git.push('origin', 'master');
+
         console.log('Changes pushed successfully');
     } catch (err) {
         console.error('Error pushing changes:', err);
