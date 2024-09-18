@@ -14,7 +14,7 @@ setInterval(() => {
     const nextCommitDate = new Date(Date.now() + 1000 * 60 * 60 * 6);
     const date = formatDate(nextCommitDate);
     const time = formatTime(nextCommitDate);
-    console.log(`Next commit scheduled for ${date} at ${time}`);
+    console.log(`Next commit scheduled for\x1b[33m${date}\x1b[0m at \x1b[33m${time}\x1b[0m`);
 }, 5000);
 
 const app = express();
