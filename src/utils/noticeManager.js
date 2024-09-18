@@ -32,4 +32,16 @@ async function checkForNewNotices(currentNotices, savedNotices, filePath) {
     }
 }
 
-module.exports = { fetchSavedNotices, checkForNewNotices };
+async function handleNotices(fetchCurrentNotices, savedNoticesPath) {
+    try {
+        const savedNotices = await fetchSavedNotices(savedNoticesPath);
+        const currentNotices = await fetchCurrentNotices;
+        const newNotices = await checkForNewNotices(currentNotices, savedNotices, savedNoticesPath);
+        return newNotices;
+    } catch (error) {
+        console.error(`Error fetching notices: ${error.message}`);
+        throw error;
+    }
+}
+
+module.exports = { fetchSavedNotices, checkForNewNotices, handleNotices };

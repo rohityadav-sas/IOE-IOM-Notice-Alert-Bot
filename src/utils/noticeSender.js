@@ -1,15 +1,21 @@
 const { fetchCurrentNoticesIOE } = require('../ioe/IOEUtils');
 const { fetchCurrentNoticesIOM } = require('../iom/IOMUtils');
-const { fetchSavedNotices, checkForNewNotices } = require('./noticeManager');
+const { handleNotices } = require('./noticeManager');
 const { fetchChatIds, removeChatId } = require('./chatIdManager');
 const { log } = require('./logger');
 const paths = require('./filePaths');
 
-async function sendNotices(bot, fetchCurrentNotices, savedNoticesPath, chatIdsPath) {
+async function processNotices(bot, fetchCurrentNotices, savedNoticesPath, chatIdsPath) {
     try {
-        const savedNotices = await fetchSavedNotices(savedNoticesPath);
-        const currentNotices = await fetchCurrentNotices;
-        const newNotices = await checkForNewNotices(currentNotices, savedNotices, savedNoticesPath);
+        const newNotices = await handleNotices(fetchCurrentNotices, savedNoticesPath);
+        await sendNotices(bot, newNotices, chatIdsPath);
+    } catch (error) {
+        console.error(`Error processing notices: ${error.message}`);
+    }
+}
+
+async function sendNotices(bot, newNotices, chatIdsPath) {
+    try {
         if (newNotices.length > 0) {
             const chatIds = await fetchChatIds(chatIdsPath);
             newNotices.forEach(notice => {
@@ -17,8 +23,7 @@ async function sendNotices(bot, fetchCurrentNotices, savedNoticesPath, chatIdsPa
             });
             await sendMessagesToChatIds(bot, chatIds, newNotices, chatIdsPath);
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.error(`Error sending notices: ${error.message}`);
     }
 }
@@ -49,14 +54,14 @@ function formatMessage(notice) {
 }
 
 async function sendNoticeIOE(bot) {
-    await sendNotices(bot, fetchCurrentNoticesIOE('exam'), paths.IOEExamNoticesPath, paths.chatIdsPathIOE);
-    await sendNotices(bot, fetchCurrentNoticesIOE('entrance'), paths.IOEEntranceNoticesPath, paths.chatIdsPathIOE);
-    await sendNotices(bot, fetchCurrentNoticesIOE('official'), paths.IOEOfficialPageNoticesPath, paths.chatIdsPathIOE);
-    await sendNotices(bot, fetchCurrentNoticesIOE('admission'), paths.IOEAdmissionNoticesPath, paths.chatIdsPathIOE);
+    await processNotices(bot, fetchCurrentNoticesIOE('exam'), paths.IOEExamNoticesPath, paths.chatIdsPathIOE);
+    await processNotices(bot, fetchCurrentNoticesIOE('entrance'), paths.IOEEntranceNoticesPath, paths.chatIdsPathIOE);
+    await processNotices(bot, fetchCurrentNoticesIOE('official'), paths.IOEOfficialPageNoticesPath, paths.chatIdsPathIOE);
+    await processNotices(bot, fetchCurrentNoticesIOE('admission'), paths.IOEAdmissionNoticesPath, paths.chatIdsPathIOE);
 }
 
 async function sendNoticeIOM(bot) {
-    await sendNotices(bot, fetchCurrentNoticesIOM(), paths.IOMExamNoticesPath, paths.chatIdsPathIOM);
+    await processNotices(bot, fetchCurrentNoticesIOM(), paths.IOMExamNoticesPath, paths.chatIdsPathIOM);
 }
 
 module.exports = { sendNoticeIOE, sendNoticeIOM, sendMessagesToChatIds };
