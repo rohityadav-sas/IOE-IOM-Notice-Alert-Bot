@@ -28,7 +28,7 @@ async function main() {
         ]);
     } catch (error) {
         console.error('An error occurred while running the bots:', error);
-        log(`Error with bot: ${error.message}`);
+        await log(`Error with bot: ${error.message}`);
     }
 }
 
