@@ -3,7 +3,6 @@ const { fetchSavedNotices } = require('./noticeManager');
 const { log } = require('./logger');
 const { extractName, compareAndSaveChatIds, removeChatId } = require('./chatIdManager');
 const jwt = require('jsonwebtoken');
-const { pushChanges } = require('./gitHelper');
 require('dotenv').config();
 
 async function botOnStart(bot, chatIdsPath, college) {
@@ -55,10 +54,8 @@ async function botOnCallback(bot, chatIdsPath, college, savedNoticesPath) {
 async function handleNewUser(bot, msg, chatIdsPath, college) {
     const chatId = msg.chat.id;
     await compareAndSaveChatIds(chatId, chatIdsPath);
-
     const name = await extractName(msg);
-    await log(`${name} started the ${college} bot. Chat ID: ${chatId}`);
-
+    log(`${name} started the ${college} bot. Chat ID: ${chatId}`);
     try {
         await bot.sendMessage(chatId, `Welcome to ${college} Notice Alert Bot.`);
         await bot.sendMessage(chatId, 'Do you want to see some latest notices?', {

@@ -18,9 +18,11 @@ async function sendNotices(bot, newNotices, chatIdsPath) {
     try {
         if (newNotices.length > 0) {
             const chatIds = await fetchChatIds(chatIdsPath);
+            let logMessage = '';
             newNotices.forEach(notice => {
-                log(`New notice received: ${notice.Description} (Published on: ${notice.Date})`);
+                logMessage += `New notice received: ${notice.Description} (Published on: ${notice.Date})`;
             });
+            await log(logMessage);
             await sendMessagesToChatIds(bot, chatIds, newNotices, chatIdsPath);
         }
     } catch (error) {
@@ -36,12 +38,12 @@ async function sendMessagesToChatIds(bot, chatIds, notices, chatIdsPath) {
             try { await bot.sendMessage(chatId, message, { parse_mode: 'HTML' }); }
             catch (error) {
                 if (error.response && error.response.statusCode === 403) {
-                    log(`User with chatId ${chatId} has blocked the bot.`, 'red');
+                    await log(`User with chatId ${chatId} has blocked the bot.`, 'red');
                     await removeChatId(chatId, chatIdsPath);
 
                 }
                 else {
-                    log(`Error sending message to ${chatId}: ${error.message}`, 'red');
+                    await log(`Error sending message to ${chatId}: ${error.message}`, 'red');
                 }
             }
         }
