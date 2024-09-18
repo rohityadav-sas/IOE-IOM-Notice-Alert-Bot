@@ -1,17 +1,33 @@
 const simpleGit = require('simple-git');
-const path = require('path');
+const git = simpleGit();
 require('dotenv').config();
 
-const git = simpleGit(path.resolve(__dirname, '..', '..'));
-const remote = `https://${process.env.GITHUB_TOKEN}@github.com/rohityadav-sas/IOE-IOM-Notice-Alert-Bot.git`;
-
-async function pushChanges(commitMessage) {
+async function pushChanges(message) {
     try {
-        await git.add('.');
-        await git.commit(commitMessage);
-        await git.push(remote, 'master');
-    } catch (error) {
-        console.error('Error pushing changes:', error);
+        const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+        if (!GITHUB_TOKEN) {
+            throw new Error('GITHUB_TOKEN environment variable is not set.');
+        }
+
+        const remoteUrl = `https://${GITHUB_TOKEN}@github.com/username/repository.git`;
+
+        const remotes = await git.getRemotes();
+        const remoteExists = remotes.some(remote => remote.name === 'origin');
+
+        if (remoteExists) {
+            await git.remote(['set-url', 'origin', remoteUrl]);
+        } else {
+            await git.addRemote('origin', remoteUrl);
+        }
+
+        await git.add('./*');
+        await git.commit(message);
+
+        await git.push('origin', 'master');
+
+        console.log('Changes pushed successfully');
+    } catch (err) {
+        console.error('Error pushing changes:', err);
     }
 }
 
