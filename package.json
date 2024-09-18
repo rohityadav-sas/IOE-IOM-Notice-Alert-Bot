@@ -3,7 +3,7 @@
   "version": "5.0.0",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/app.js"
+    "start": "git config --global user.email 'rohityadav.se@gmail.com' && git config --global user.name 'Rohit Yadav' && node src/app.js"
   },
   "keywords": [
     "nodejs",
