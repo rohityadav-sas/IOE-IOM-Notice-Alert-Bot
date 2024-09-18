@@ -101,6 +101,8 @@
 
 - **express**: For handling HTTP requests and routing.
 
+- **jsonwebtoken**: For generating and verifying JSON Web Tokens (JWT) for authentication.
+
 - **axios**: For making HTTP requests.
 
 - **cheerio**: For parsing HTML and extracting data.
