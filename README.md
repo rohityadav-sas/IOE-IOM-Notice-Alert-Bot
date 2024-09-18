@@ -34,8 +34,7 @@
 - Fetches the latest exam, entrance, official, and admission notices from the IOE and IOM websites.
 - Compares the fetched notices with previously saved notices to identify new ones.
 - Sends the new notices directly to registered Telegram users.
-- Welcomes users and offers the option to view previously saved notices.
-- Stops polling after a specific duration to adhere to GitHub Actions' free tier limitations.
+- Welcomes users and offers the option to view latest notices.
 - Provides a web interface to view and download logs.
 
 ## Prerequisites
@@ -70,6 +69,10 @@
     USER=your-username
 
     PASSWORD=your-password
+
+    JWT_SECRET=your-secret-key
+
+    GITHUB_TOKEN=your-github-token
     ```
 
 ## Usage
@@ -99,9 +102,7 @@
 
 ## Dependencies
 
-- **express**: For handling HTTP requests and routing.
-
-- **jsonwebtoken**: For generating and verifying JSON Web Tokens (JWT) for authentication.
+- **node-telegram-bot-api**: For interacting with the Telegram Bot API.
 
 - **axios**: For making HTTP requests.
 
@@ -109,7 +110,11 @@
 
 - **dotenv**: For loading environment variables.
 
-- **node-telegram-bot-api**: For interacting with the Telegram Bot API.
+- **jsonwebtoken**: For generating and verifying JSON Web Tokens (JWT) for authentication.
+
+- **express**: For handling HTTP requests and routing.
+
+- **simple-git**: For automating git operations (auto-pushing changes).
 
 ## License
 
