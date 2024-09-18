@@ -12,7 +12,7 @@ async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, 
         sendNoticeFn(bot);
         setInterval(async () => {
             await sendNoticeFn(bot);
-        }, 1000 * 5 * 60);
+        }, 5000);
     } catch (error) {
         console.error(`Error with ${botName}:`, error);
     }

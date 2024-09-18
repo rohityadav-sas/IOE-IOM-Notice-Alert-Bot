@@ -14,6 +14,9 @@ async function botOnStart(bot, chatIdsPath, college) {
             const token = jwt.sign({ user: 'simple' }, process.env.JWT_SECRET, {
                 expiresIn: '5m'
             })
+            setTimeout(() => {
+                bot.sendMessage(msg.chat.id, 'Token expired');
+            }, 5 * 60 * 1000);
             await bot.sendMessage(msg.chat.id, 'View logs:', {
                 reply_markup: {
                     inline_keyboard: [[

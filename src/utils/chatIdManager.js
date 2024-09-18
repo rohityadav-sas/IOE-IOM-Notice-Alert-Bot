@@ -1,18 +1,15 @@
 const fs = require('fs');
-
-let cachedChatIds = {};
+const { updateChatIdsToGist } = require('./chatids-github-gist');
+const path = require('path');
 
 async function fetchChatIds(chatIdsPath) {
-    if (!cachedChatIds[chatIdsPath]) {
-        try {
-            const chatIds = JSON.parse(fs.readFileSync(chatIdsPath, 'utf-8')) || [];
-            cachedChatIds[chatIdsPath] = chatIds;
-        } catch (error) {
-            console.error(`Error reading chat IDs from ${chatIdsPath}: ${error.message}`);
-            return [];
-        }
+    try {
+        const chatIds = JSON.parse(fs.readFileSync(chatIdsPath, 'utf-8')) || [];
+        return chatIds;
+    } catch (error) {
+        console.error(`Error reading chat IDs from ${chatIdsPath}: ${error.message}`);
+        return [];
     }
-    return cachedChatIds[chatIdsPath];
 }
 
 async function extractName({ from }) {
@@ -21,10 +18,15 @@ async function extractName({ from }) {
 
 async function compareAndSaveChatIds(chatID, chatIdsPath) {
     const chatIds = await fetchChatIds(chatIdsPath);
-    if (!chatIds.includes(chatID)) {
-        chatIds.push(chatID);
+    if (!chatIds.includes(chatID.toString())) {
+        chatIds.push(chatID.toString());
         fs.writeFileSync(chatIdsPath, JSON.stringify(chatIds, null, 2));
-        cachedChatIds[chatIdsPath] = chatIds;
+        if (path.basename(chatIdsPath).includes('IOE')) {
+            updateChatIdsToGist('IOE', chatIdsPath);
+        }
+        else if (path.basename(chatIdsPath).includes('IOM')) {
+            updateChatIdsToGist('IOM', chatIdsPath);
+        }
     }
 }
 
@@ -33,7 +35,6 @@ async function removeChatId(chatId, chatIdsPath) {
         const chatIds = await fetchChatIds(chatIdsPath);
         const updatedChatIds = chatIds.filter(id => id !== chatId);
         fs.writeFileSync(chatIdsPath, JSON.stringify(updatedChatIds, null, 2));
-        cachedChatIds[chatIdsPath] = updatedChatIds;
     } catch (error) {
         console.error(`Error removing chatId ${chatId} from ${chatIdsPath}: ${error.message}`);
     }
