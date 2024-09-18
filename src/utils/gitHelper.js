@@ -10,12 +10,9 @@ async function pushChanges(commitMessage) {
         await git.add('.');
         await git.commit(commitMessage);
         await git.push(remote, 'master');
-        console.log('Changes pushed successfully!');
     } catch (error) {
         console.error('Error pushing changes:', error);
     }
 }
-
-pushChanges('Testing simple-git');
 
 module.exports = { pushChanges };

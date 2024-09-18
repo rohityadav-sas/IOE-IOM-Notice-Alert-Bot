@@ -3,6 +3,7 @@ const { fetchSavedNotices } = require('./noticeManager');
 const { log } = require('./logger');
 const { extractName, compareAndSaveChatIds, removeChatId } = require('./chatIdManager');
 const jwt = require('jsonwebtoken');
+const { pushChanges } = require('./gitHelper');
 require('dotenv').config();
 
 async function botOnStart(bot, chatIdsPath, college) {
