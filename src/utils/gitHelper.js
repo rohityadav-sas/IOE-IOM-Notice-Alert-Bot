@@ -5,7 +5,7 @@ require('dotenv').config();
 async function pushChanges(message) {
     try {
         const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-        const remoteUrl = `https://${GITHUB_TOKEN}@github.com/rohityadav-sas/IOE-IOM-Notice-Alert.git`;
+        const remoteUrl = `https://${GITHUB_TOKEN}@github.com/rohityadav-sas/IOE-IOM-Notice-Alert-Bot.git`;
 
         const remotes = await git.getRemotes(true);
         console.log('Current remotes:', remotes);
