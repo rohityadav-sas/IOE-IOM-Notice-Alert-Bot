@@ -20,7 +20,7 @@ async function botOnStart(bot, chatIdsPath, college) {
             await bot.sendMessage(msg.chat.id, 'View logs:', {
                 reply_markup: {
                     inline_keyboard: [[
-                        { text: 'Logs', web_app: { url: `https://ioe-iom-notice-alert-bot.onrender.com/logs/?token=${token}`, hide_url: true } }
+                        { text: 'Logs', web_app: { url: `https://ioe-iom-notice-alert-bot-bkvn.onrender.com/logs/?token=${token}`, hide_url: true } }
                     ]]
                 }
             })

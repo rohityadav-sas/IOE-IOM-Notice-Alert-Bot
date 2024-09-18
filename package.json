@@ -3,7 +3,7 @@
   "version": "5.0.0",
   "main": "src/app.js",
   "scripts": {
-    "start": "node --watch . src/app.js"
+    "start": "node src/app.js"
   },
   "keywords": [
     "nodejs",
