@@ -10,6 +10,8 @@ const { pushChanges } = require('./utils/gitHelper');
 
 setInterval(() => {
     pushChanges('Scheduled commit');
+    const nextCommitDate = new Date(Date.now() + 1000 * 60 * 60 * 6);
+    console.log(`Next commit scheduled at: ${nextCommitDate}`);
 }, 5000);
 
 const app = express();
