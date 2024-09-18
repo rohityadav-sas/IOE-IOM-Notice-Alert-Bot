@@ -23,8 +23,8 @@ app.get('/', async (req, res) => {
 app.use('/logs', basicAuth, logRoutes);
 app.use(loginRoutes);
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log('\x1b[32m%s\x1b[0m', `Server is running on port ${process.env.PORT || 3000}\n`);
+app.listen(process.env.PORT, () => {
+    console.log('\x1b[32m%s\x1b[0m', `Server is running on port ${process.env.PORT}\n`);
 });
 
 main();
