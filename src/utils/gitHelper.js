@@ -9,7 +9,7 @@ async function pushChanges(message) {
             throw new Error('GITHUB_TOKEN environment variable is not set.');
         }
 
-        const remoteUrl = `https://${GITHUB_TOKEN}@github.com/username/repository.git`;
+        const remoteUrl = `https://${GITHUB_TOKEN}@github.com/rohityadav-sas/IOE-IOM-Notice-Alert-Bot.git`;
 
         const remotes = await git.getRemotes();
         const remoteExists = remotes.some(remote => remote.name === 'origin');
