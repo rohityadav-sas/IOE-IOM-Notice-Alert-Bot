@@ -12,3 +12,5 @@
 
 [Thursday, September 19, 2024] [03:27 AM] - New notice received: Notice Reserved Quota 2081 Revised (Published on: Monday, September 16, 2024)
 
+[Thursday, September 19, 2024] [03:27 AM] - Error sending message to 101271123: ETELEGRAM: 400 Bad Request: chat not found
+
