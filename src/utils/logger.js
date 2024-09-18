@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const logFilePath = path.join(__dirname, 'logs.txt');
 const { formatDate, formatTime } = require('./date&TimeFormatter');
+const { updateToGist } = require('./logs-github-gist');
 
 const colorCodes = {
     yellow: '\x1b[33m',
@@ -23,6 +24,7 @@ function log(message, color = 'yellow') {
     const colorCode = colorCodes[color];
     console.log(`${colorCode}%s${colorCodes.reset}`, logMessage);
     fs.appendFileSync(logFilePath, logMessage);
+    updateToGist(logFilePath);
 }
 
 module.exports = { log };
