@@ -40,7 +40,6 @@ async function sendMessagesToChatIds(bot, chatIds, notices, chatIdsPath) {
                 if (error.response && error.response.statusCode === 403) {
                     await removeChatId(chatId, chatIdsPath);
                     await log(`User with chatId ${chatId} has blocked the bot.`, 'red');
-
                 }
                 else {
                     await log(`Error sending message to ${chatId}: ${error.message}`, 'red');
@@ -56,10 +55,12 @@ function formatMessage(notice) {
 }
 
 async function sendNoticeIOE(bot) {
-    await processNotices(bot, fetchCurrentNoticesIOE('exam'), paths.IOEExamNoticesPath, paths.chatIdsPathIOE);
-    await processNotices(bot, fetchCurrentNoticesIOE('entrance'), paths.IOEEntranceNoticesPath, paths.chatIdsPathIOE);
-    await processNotices(bot, fetchCurrentNoticesIOE('official'), paths.IOEOfficialPageNoticesPath, paths.chatIdsPathIOE);
-    await processNotices(bot, fetchCurrentNoticesIOE('admission'), paths.IOEAdmissionNoticesPath, paths.chatIdsPathIOE);
+    await Promise.all(
+        [paths.IOEExamNoticesPath, paths.IOEEntranceNoticesPath, paths.IOEOfficialPageNoticesPath, paths.IOEAdmissionNoticesPath]
+            .map(async (path, index) => {
+                await processNotices(bot, fetchCurrentNoticesIOE(index), path, paths.chatIdsPathIOE);
+            })
+    );
 }
 
 async function sendNoticeIOM(bot) {
