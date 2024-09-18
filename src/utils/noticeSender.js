@@ -55,10 +55,16 @@ function formatMessage(notice) {
 }
 
 async function sendNoticeIOE(bot) {
+    let noticePaths = {
+        'exam': paths.IOEExamNoticesPath,
+        'entrance': paths.IOEEntranceNoticesPath,
+        'official': paths.IOEOfficialPageNoticesPath,
+        'admission': paths.IOEAdmissionNoticesPath
+    }
     await Promise.all(
-        [paths.IOEExamNoticesPath, paths.IOEEntranceNoticesPath, paths.IOEOfficialPageNoticesPath, paths.IOEAdmissionNoticesPath]
-            .map(async (path, index) => {
-                await processNotices(bot, fetchCurrentNoticesIOE(index), path, paths.chatIdsPathIOE);
+        Object.keys(noticePaths)
+            .map(async (key) => {
+                await processNotices(bot, fetchCurrentNoticesIOE(key), noticePaths[key], paths.chatIdsPathIOE);
             })
     );
 }
