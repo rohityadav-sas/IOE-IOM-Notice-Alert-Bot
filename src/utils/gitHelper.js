@@ -9,9 +9,10 @@ async function pushChanges(message) {
             throw new Error('GITHUB_TOKEN environment variable is not set.');
         }
 
-        const remoteUrl = `https://${GITHUB_TOKEN}@github.com/rohityadav-sas/IOE-IOM-Notice-Alert-Bot.git`;
+        const remoteUrl = `https://${GITHUB_TOKEN}@github.com/rohityadav-sas/IOE-IOM-Notice-Alert.git`;
 
         const remotes = await git.getRemotes();
+        console.log('Current remotes:', remotes);
         const remoteExists = remotes.some(remote => remote.name === 'origin');
 
         if (remoteExists) {
@@ -20,10 +21,14 @@ async function pushChanges(message) {
             await git.addRemote('origin', remoteUrl);
         }
 
+        const status = await git.status();
+        console.log('Git status:', status);
+
         await git.add('./*');
         await git.commit(message);
 
-        await git.push('origin', 'master');
+        const result = await git.push('origin', 'main');
+        console.log('Push result:', result);
 
         console.log('Changes pushed successfully');
     } catch (err) {
@@ -32,3 +37,4 @@ async function pushChanges(message) {
 }
 
 module.exports = { pushChanges };
+
