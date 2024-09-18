@@ -16,11 +16,15 @@ async function pushChanges(message) {
         } else {
             await git.addRemote('origin', remoteUrl);
         }
+        const status = await git.status();
+        console.log('Git status:', status);
 
         await git.add('./*');
         await git.commit(message);
 
-        await git.push('origin', 'master');
+        const result = await git.push('origin', 'master');
+        console.log('Push result:', result);
+
 
         console.log('Changes pushed successfully');
     } catch (err) {
