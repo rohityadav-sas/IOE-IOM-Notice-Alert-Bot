@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { updateChatIdsToGist } = require('./chatids-github-gist');
 const path = require('path');
 
 async function fetchChatIds(chatIdsPath) {
@@ -21,12 +20,6 @@ async function compareAndSaveChatIds(chatID, chatIdsPath) {
     if (!chatIds.includes(chatID.toString())) {
         chatIds.push(chatID.toString());
         fs.writeFileSync(chatIdsPath, JSON.stringify(chatIds, null, 2));
-        if (path.basename(chatIdsPath).includes('IOE')) {
-            updateChatIdsToGist('IOE', chatIdsPath);
-        }
-        else if (path.basename(chatIdsPath).includes('IOM')) {
-            updateChatIdsToGist('IOM', chatIdsPath);
-        }
     }
 }
 
