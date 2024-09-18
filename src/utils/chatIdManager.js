@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const { pushChanges } = require('./gitHelper');
 async function fetchChatIds(chatIdsPath) {
     try {
         const chatIds = JSON.parse(fs.readFileSync(chatIdsPath, 'utf-8')) || [];
@@ -20,7 +19,6 @@ async function compareAndSaveChatIds(chatID, chatIdsPath) {
     if (!chatIds.includes(chatID.toString())) {
         chatIds.push(chatID.toString());
         fs.writeFileSync(chatIdsPath, JSON.stringify(chatIds, null, 2));
-        await pushChanges(`New User, chatId: ${chatID}`);
     }
 }
 

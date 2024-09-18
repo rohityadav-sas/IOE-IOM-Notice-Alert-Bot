@@ -42,7 +42,7 @@ async function botOnCallback(bot, chatIdsPath, college, savedNoticesPath) {
         const name = await extractName(query);
         const queryData = query.data;
 
-        log(`${name} selected: ${queryData === 'latest' ? 'Latest Notices' : 'No'}`);
+        await log(`${name} selected: ${queryData === 'latest' ? 'Latest Notices' : 'No'}`);
 
         if (queryData === 'latest') {
             await handleLatestNotices(bot, chatId, college, savedNoticesPath, chatIdsPath, name);
@@ -57,7 +57,7 @@ async function handleNewUser(bot, msg, chatIdsPath, college) {
     await compareAndSaveChatIds(chatId, chatIdsPath);
 
     const name = await extractName(msg);
-    log(`${name} started the ${college} bot. Chat ID: ${chatId}`);
+    await log(`${name} started the ${college} bot. Chat ID: ${chatId}`);
 
     try {
         await bot.sendMessage(chatId, `Welcome to ${college} Notice Alert Bot.`);
@@ -105,7 +105,7 @@ async function sendSubscriptionMessage(bot, chatId, college, chatIdsPath, name) 
 
 async function handleBotError(chatId, error, chatIdsPath, name) {
     if (error.response?.statusCode === 403) {
-        log(`User ${name} with chatId ${chatId} has blocked the bot.`, 'red');
+        await log(`User ${name} with chatId ${chatId} has blocked the bot.`, 'red');
         await removeChatId(chatId, chatIdsPath);
     } else {
         console.error(`Error: ${error.message}`);

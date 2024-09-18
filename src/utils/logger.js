@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const logFilePath = path.join(__dirname, 'logs.txt');
 const { formatDate, formatTime } = require('./date&TimeFormatter');
+const { pushChanges } = require('./gitHelper');
 
 const colorCodes = {
     yellow: '\x1b[33m',
@@ -17,12 +18,14 @@ function getFormattedDate() {
     return `[${formattedDate}] [${formattedTime}]`;
 }
 
-function log(message, color = 'yellow') {
+async function log(message, color = 'yellow') {
     const timestamp = getFormattedDate();
-    const logMessage = `${timestamp} - ${message}\n\n`;
+    let logMessage = `${timestamp} - ${message}\n\n`;
     const colorCode = colorCodes[color];
     console.log(`${colorCode}%s${colorCodes.reset}`, logMessage);
     fs.appendFileSync(logFilePath, logMessage);
+    logMessage = logMessage.replace(/\n/g, '').trim();
+    await pushChanges(logMessage);
 }
 
 module.exports = { log };
