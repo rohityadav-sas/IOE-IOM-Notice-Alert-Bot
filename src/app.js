@@ -6,16 +6,6 @@ const logRoutes = require('./routes/logs');
 const loginRoutes = require('./routes/login');
 const basicAuth = require('./middlewares/auth');
 const cookieParser = require('cookie-parser');
-const { pushChanges } = require('./utils/gitHelper');
-const { formatDate, formatTime } = require('./utils/date&TimeFormatter');
-
-setInterval(async () => {
-    await pushChanges('Scheduled commit');
-    const nextCommitDate = new Date(Date.now() + 1000 * 60 * 60 * 6);
-    const date = formatDate(nextCommitDate);
-    const time = formatTime(nextCommitDate);
-    console.log(`Next commit scheduled for \x1b[33m${date}\x1b[0m at \x1b[33m${time}\x1b[0m\n`);
-}, 1000 * 60 * 60 * 6);
 
 const app = express();
 app.use(express.json());

@@ -14,6 +14,11 @@ async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, 
         setInterval(async () => {
             await sendNoticeFn(bot);
         }, 5 * 60 * 1000);
+        if (botName === 'IOE') {
+            setInterval(async () => {
+                await pushChanges('Scheduled commit', bot);
+            }, 5000);
+        }
     } catch (error) {
         console.error(`Error with ${botName}:`, error);
     }
@@ -27,10 +32,7 @@ async function main() {
             handleBot(process.env.TELEGRAM_BOT_TOKEN_IOE, paths.chatIdsPathIOE, IOENoticesPath, sendNoticeIOE, 'IOE'),
             handleBot(process.env.TELEGRAM_BOT_TOKEN_IOM, paths.chatIdsPathIOM, IOMNoticesPath, sendNoticeIOM, 'IOM')
         ]);
-        setInterval(async () => {
-            await pushChanges('Scheduled commit', bot);
 
-        }, 1000 * 60 * 60 * 6);
     } catch (error) {
         console.error('An error occurred while running the bots:', error);
         await log(`Error with bot: ${error.message}`);
