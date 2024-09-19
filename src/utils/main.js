@@ -17,7 +17,7 @@ async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, 
         if (botName === 'IOE') {
             setInterval(async () => {
                 await pushChanges('Scheduled commit', bot);
-            }, 5000);
+            }, 1000 * 60 * 60 * 6);
         }
     } catch (error) {
         console.error(`Error with ${botName}:`, error);
