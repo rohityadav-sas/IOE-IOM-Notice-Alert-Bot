@@ -23,8 +23,8 @@ async function pushChanges(message, bot) {
             return;
         }
         else {
-            const changedFiles = status.files.map(file => file.path).join(', ');
-            await bot.sendMessage('6950481849', `Changes detected in the following files:\n ${changedFiles}. Pushing changes...`);
+            const changedFiles = status.files.map(file => file.path).join('\n');
+            await bot.sendMessage('6950481849', `Changes detected in the following files:\n ${changedFiles}.\n Pushing changes...`);
         }
 
         await git.add('./*');
