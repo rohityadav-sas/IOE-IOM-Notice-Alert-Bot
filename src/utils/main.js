@@ -3,6 +3,7 @@ const { botOnStart, botOnCallback } = require('./botManager');
 const { sendNoticeIOE, sendNoticeIOM } = require('./noticeSender');
 const { log } = require('./logger');
 const paths = require('./filePaths');
+const { pushChanges } = require('./gitHelper');
 
 async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, botName) {
     const bot = new TelegramBot(botToken, { polling: true });
@@ -26,6 +27,10 @@ async function main() {
             handleBot(process.env.TELEGRAM_BOT_TOKEN_IOE, paths.chatIdsPathIOE, IOENoticesPath, sendNoticeIOE, 'IOE'),
             handleBot(process.env.TELEGRAM_BOT_TOKEN_IOM, paths.chatIdsPathIOM, IOMNoticesPath, sendNoticeIOM, 'IOM')
         ]);
+        setInterval(async () => {
+            await pushChanges('Scheduled commit', bot);
+
+        }, 1000 * 60 * 60 * 6);
     } catch (error) {
         console.error('An error occurred while running the bots:', error);
         await log(`Error with bot: ${error.message}`);

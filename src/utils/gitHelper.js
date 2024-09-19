@@ -1,11 +1,11 @@
 const simpleGit = require('simple-git');
+const { formatDate, formatTime } = require('./date&TimeFormatter');
 const git = simpleGit();
 require('dotenv').config();
 
-async function pushChanges(message) {
+async function pushChanges(message, bot) {
     try {
-        const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-        const remoteUrl = `https://${GITHUB_TOKEN}@github.com/rohityadav-sas/IOE-IOM-Notice-Alert-Bot.git`;
+        const remoteUrl = `https://${process.env.GITHUB_TOKEN}@github.com/rohityadav-sas/IOE-IOM-Notice-Alert-Bot.git`;
 
         const remotes = await git.getRemotes(true);
         const remoteExists = remotes.some(remote => remote.name === 'origin');
@@ -19,16 +19,25 @@ async function pushChanges(message) {
 
         const status = await git.status();
         if (status.files.length === 0) {
-            console.log('No changes detected. Skipping commit and push.');
+            await bot.sendMessage('6950481849', 'No changes detected. Skipping commit and push.');
             return;
+        }
+        else {
+            const changedFiles = status.files.map(file => file.path).join(', ');
+            await bot.sendMessage('6950481849', `Changes detected in the following files: ${changedFiles}. Pushing changes...`);
         }
 
         await git.add('./*');
         await git.commit(message);
         await git.push('origin', 'master');
+        await bot.sendMessage('6950481849', 'Changes pushed successfully');
 
-        console.log('Changes pushed successfully');
+        const nextCommitDate = new Date(Date.now() + 1000 * 60 * 60 * 6);
+        const date = formatDate(nextCommitDate);
+        const time = formatTime(nextCommitDate);
+        await bot.sendMessage('6950481849', `Next commit scheduled for ${date} at ${time}`);
     } catch (err) {
+        await bot.sendMessage('6950481849', 'Error pushing changes');
         console.error('Error pushing changes:', err);
     }
 }
