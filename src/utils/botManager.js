@@ -4,13 +4,14 @@ const { log } = require('./logger');
 const { extractName, compareAndSaveChatIds, removeChatId } = require('./chatIdManager');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const admin = '7070127929';
 
 async function botOnStart(bot, chatIdsPath, college) {
     bot.onText('/start', async (msg) => {
         await handleNewUser(bot, msg, chatIdsPath, college);
     });
     bot.onText(/logs/i, async (msg) => {
-        if (msg.chat.id.toString() === '7070127929') {
+        if (msg.chat.id.toString() === admin) {
             const token = jwt.sign({ user: 'simple' }, process.env.JWT_SECRET, {
                 expiresIn: '5m'
             })

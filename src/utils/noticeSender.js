@@ -8,7 +8,7 @@ const paths = require('./filePaths');
 async function processNotices(bot, fetchCurrentNotices, savedNoticesPath, chatIdsPath) {
     try {
         const newNotices = await handleNotices(fetchCurrentNotices, savedNoticesPath);
-        // await sendNotices(bot, newNotices, chatIdsPath);
+        await sendNotices(bot, newNotices, chatIdsPath);
     } catch (error) {
         console.error(`Error processing notices: ${error.message}`);
     }

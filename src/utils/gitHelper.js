@@ -45,7 +45,7 @@ async function informNextCommitDate(bot) {
     const nextCommitDate = new Date(Date.now() + 1000 * 60 * 60 * 6);
     const date = formatDate(nextCommitDate);
     const time = formatTime(nextCommitDate);
-    await bot.sendMessage(errorAdmin, `Next commit scheduled for:\n<b>${date}</b>\n<b>${time}</b>`, { parse_mode: 'HTML' });
+    await bot.sendMessage(errorAdmin, `Next commit scheduled for:\n\n<b>${date}</b>\n<b>${time}</b>`, { parse_mode: 'HTML' });
 }
 
 module.exports = { pushChanges };

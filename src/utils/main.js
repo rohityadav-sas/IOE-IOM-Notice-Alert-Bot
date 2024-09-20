@@ -13,11 +13,11 @@ async function handleBot(botToken, chatIdsPath, savedNoticesPath, sendNoticeFn, 
         sendNoticeFn(bot);
         setInterval(async () => {
             await sendNoticeFn(bot);
-        }, 10000);
+        }, 5 * 1000 * 60);
         if (botName === 'IOE') {
             setInterval(async () => {
                 await pushChanges('Scheduled commit', bot);
-            }, 5000);
+            }, 6 * 60 * 60 * 1000);
         }
     } catch (error) {
         console.error(`Error with ${botName}:`, error);
