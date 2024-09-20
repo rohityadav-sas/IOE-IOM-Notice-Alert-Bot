@@ -36,7 +36,7 @@ async function pushChanges(message, bot) {
         const nextCommitDate = new Date(Date.now() + 1000 * 60 * 60 * 6);
         const date = formatDate(nextCommitDate);
         const time = formatTime(nextCommitDate);
-        await bot.sendMessage(errorAdmin, `Next commit scheduled for ${date} at ${time}`);
+        await bot.sendMessage(errorAdmin, `Next commit scheduled for:\n\n <b>${date}<b> at \n <b>${time}<b>`, { parse_mode: 'HTML' });
     } catch (err) {
         await bot.sendMessage(errorAdmin, 'Error pushing changes');
         console.error('Error pushing changes:', err);
