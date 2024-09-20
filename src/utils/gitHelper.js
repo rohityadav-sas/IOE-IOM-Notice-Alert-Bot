@@ -21,6 +21,7 @@ async function pushChanges(message, bot) {
         const status = await git.status();
         if (status.files.length === 0) {
             await bot.sendMessage(errorAdmin, 'No changes detected. Skipping commit and push.');
+            await informNextCommitDate();
             return;
         }
         else {
@@ -33,14 +34,18 @@ async function pushChanges(message, bot) {
         await git.push('origin', 'master');
         await bot.sendMessage(errorAdmin, 'Changes pushed successfully');
 
-        const nextCommitDate = new Date(Date.now() + 1000 * 60 * 60 * 6);
-        const date = formatDate(nextCommitDate);
-        const time = formatTime(nextCommitDate);
-        await bot.sendMessage(errorAdmin, `Next commit scheduled for:\n\n <b>${date}</b> at \n <b>${time}</b>`, { parse_mode: 'HTML' });
+        await informNextCommitDate();
     } catch (err) {
         await bot.sendMessage(errorAdmin, 'Error pushing changes');
         console.error('Error pushing changes:', err);
     }
+}
+
+async function informNextCommitDate() {
+    const nextCommitDate = new Date(Date.now() + 1000 * 60 * 60 * 6);
+    const date = formatDate(nextCommitDate);
+    const time = formatTime(nextCommitDate);
+    await bot.sendMessage(errorAdmin, `Next commit scheduled for:\n\n<b>${date}</b>\n<b>${time}</b>`, { parse_mode: 'HTML' });
 }
 
 module.exports = { pushChanges };
