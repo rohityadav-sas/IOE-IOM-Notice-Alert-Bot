@@ -48,3 +48,9 @@
 
 [Tuesday, October 1, 2024] [04:51 PM] - New notice received: Re totaling result of Bachelor 1st Year various programs and MBBS & BDS 2nd Year regular exam 2081. (Published on: Tuesday, October 1, 2024)
 
+[Wednesday, October 2, 2024] [06:46 PM] - Error sending message to 1012711232: EFATAL: AggregateError
+
+[Wednesday, October 2, 2024] [06:46 PM] - New notice received: BE/BArch Admission 2081, Reapplication (Second Phase) Short Notice (Published on: Wednesday, October 2, 2024)
+
+[Wednesday, October 2, 2024] [07:51 PM] - New notice received: लिखित परीक्षाको लागि योग्य आवेदकहरूको सूची सम्बन्धि सूचना । (Published on: Wednesday, October 2, 2024)
+
