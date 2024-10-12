@@ -2,7 +2,7 @@ const simpleGit = require('simple-git');
 const { formatDate, formatTime } = require('./date&TimeFormatter');
 const git = simpleGit();
 require('dotenv').config();
-const errorAdmin = '7610963855';
+const errorAdmin = '7070127929';
 
 async function pushChanges(message, bot) {
     try {
