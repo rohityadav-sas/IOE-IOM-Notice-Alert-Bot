@@ -21,7 +21,7 @@ async function sendNotices(bot, newNotices, chatIdsPath) {
             await sendMessagesToChatIds(bot, chatIds, newNotices, chatIdsPath);
             let logMessage = '';
             newNotices.forEach(notice => {
-                logMessage += `New notice received: ${notice.Description} (Published on: ${notice.Date})`;
+                logMessage += `New notice received: ${notice.Description}`;
             });
             await log(logMessage);
         }
