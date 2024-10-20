@@ -20,4 +20,7 @@
 
 [Sunday, September 22, 2024] [05:26 PM] - Error sending message to 1012711232: EFATAL: AggregateError
 
-[Wednesday, October 2, 2024] [06:46 PM] - Error sending message to 1012711232: EFATAL: AggregateError
+[Wednesday, October 2, 2024] [06:46 PM] - Error sending message to 1012711232: EFATAL: AggregateError[Sunday, October 20, 2024] [05:11 PM] - User with chatId 7610963855 has blocked the bot.
+
+[Sunday, October 20, 2024] [05:11 PM] - New notice received: BE/BArch Admission 2081, Priority Reapplication (Second Phase) Notice
+
