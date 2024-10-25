@@ -32,3 +32,13 @@
 
 [Thursday, October 24, 2024] [07:36 PM] - New notice received: BE/BArch Admission 2081, Final Second Phase Priority Applicants after Correction
 
+[Friday, October 25, 2024] [04:01 PM] - Error sending message to 1988702309: EFATAL: AggregateError
+
+[Friday, October 25, 2024] [04:01 PM] - New notice received: Result of BDS 4th Year 2nd Phase and PCL Nursing 2nd Year Supplementary Exam 2081New notice received: Result of various PG programs 2nd, 3rd and Final Year Supplementary Exam 2081
+
+[Friday, October 25, 2024] [05:16 PM] - New notice received: Re-totalling Result: BE/BAR I/I (Regular) exam held on 2081 Baishakh
+
+[Friday, October 25, 2024] [05:16 PM] - New notice received: BE/BArch Admission 2081, Second Phase Architecture Aptitude Result
+
+[Friday, October 25, 2024] [05:31 PM] - New notice received: BE/BArch Admission 2081, Fourth Admission List
+
