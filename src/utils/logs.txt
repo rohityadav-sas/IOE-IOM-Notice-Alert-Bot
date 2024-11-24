@@ -80,3 +80,7 @@
 
 [Sunday, November 24, 2024] [05:25 PM] - New notice received: नतिजा प्रकाशन गरिएको बारे ।
 
+[Monday, November 25, 2024] [12:10 AM] - Saberika started the IOM bot. Chat ID: 7954381158
+
+[Monday, November 25, 2024] [12:10 AM] - Saberika selected: Latest Notices
+
