@@ -40,13 +40,18 @@ async function checkForNewNotices(currentNotices, savedNotices, filePath) {
 async function handleNotices(fetchCurrentNotices, savedNoticesPath) {
 	try {
 		const savedNotices = await fetchSavedNotices(savedNoticesPath);
+		console.log(`Saved Notices: `, savedNotices);
 		const currentNotices = await fetchCurrentNotices;
+		console.log(`Current Notices: `, currentNotices);
 		const newNotices = await checkForNewNotices(
 			currentNotices,
 			savedNotices,
 			savedNoticesPath
 		);
+		console.log(`New Notices: `, newNotices);
 		const allNotices = [...newNotices, ...savedNotices];
+		console.log(`All Notices: `, allNotices);
+
 		if (allNotices.length > 5) {
 			saveNotices(allNotices.slice(0, 5), savedNoticesPath);
 		} else {
