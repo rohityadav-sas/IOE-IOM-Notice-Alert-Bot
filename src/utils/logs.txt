@@ -18,48 +18,6 @@
 
 [Saturday, September 21, 2024] [10:08 AM] - Rohit Kumar selected: No
 
-[Sunday, September 22, 2024] [05:26 PM] - Error sending message to 1012711232: EFATAL: AggregateError
-
-[Wednesday, October 2, 2024] [06:46 PM] - Error sending message to 1012711232: EFATAL: AggregateError[Sunday, October 20, 2024] [05:11 PM] - User with chatId 7610963855 has blocked the bot.
-
-[Sunday, October 20, 2024] [05:11 PM] - New notice received: BE/BArch Admission 2081, Priority Reapplication (Second Phase) Notice
-
-[Wednesday, October 23, 2024] [02:16 PM] - New notice received: Notice Regarding Written Examination for the Vacancy
-
-[Wednesday, October 23, 2024] [05:56 PM] - New notice received: Re-Totaling Result: BE/BAR Last Semester Exam Held On 2081 Shrwan
-
-[Wednesday, October 23, 2024] [06:11 PM] - New notice received: BE/BArch Admission 2081, Second Phase Applicant Priority List and Priority Correction Notice
-
-[Thursday, October 24, 2024] [07:36 PM] - New notice received: BE/BArch Admission 2081, Final Second Phase Priority Applicants after Correction
-
-[Friday, October 25, 2024] [04:01 PM] - Error sending message to 1988702309: EFATAL: AggregateError
-
-[Friday, October 25, 2024] [04:01 PM] - New notice received: Result of BDS 4th Year 2nd Phase and PCL Nursing 2nd Year Supplementary Exam 2081New notice received: Result of various PG programs 2nd, 3rd and Final Year Supplementary Exam 2081
-
-[Friday, October 25, 2024] [05:16 PM] - New notice received: Re-totalling Result: BE/BAR I/I (Regular) exam held on 2081 Baishakh
-
-[Friday, October 25, 2024] [05:16 PM] - New notice received: BE/BArch Admission 2081, Second Phase Architecture Aptitude Result
-
-[Friday, October 25, 2024] [05:31 PM] - New notice received: BE/BArch Admission 2081, Fourth Admission List
-
-[Sunday, October 27, 2024] [05:31 PM] - New notice received: BE/BArch Admission 2081, Revised Fourth Admission List
-
-[Monday, October 28, 2024] [06:46 PM] - New notice received: BE/BArch Admission 2081, Fifth Admission List
-
-[Tuesday, October 29, 2024] [05:06 PM] - New notice received: BE/BArch Admission 2081, Revised Fifth Admission List
-
-[Tuesday, November 5, 2024] [04:22 PM] - New notice received: BE/BArch Admission 2081, Sixth Admission List
-
-[Tuesday, November 5, 2024] [04:31 PM] - New notice received: Exam Center: BE/BAR I Year I Part (New Course) for 2081 Kartik
-
-[Wednesday, November 6, 2024] [04:17 PM] - New notice received: BE/BArch Admission 2081, Revised Sixth Admission List
-
-[Sunday, November 10, 2024] [05:12 PM] - New notice received: BE/BArch Admission 2081, Short Notice for Remaining Seats Third Final Phase
-
-[Sunday, November 10, 2024] [05:22 PM] - New notice received: BE/BArch Admission 2081, Short Notice for Remaining Seats Third and Final Phase
-
-[Thursday, November 14, 2024] [08:05 PM] - New notice received: लिखित परीक्षाको नतिजा प्रकाशन गरिएको बारे
-
 [Monday, November 25, 2024] [12:10 AM] - Saberika started the IOM bot. Chat ID: 7954381158
 
 [Monday, November 25, 2024] [12:10 AM] - Saberika selected: Latest Notices
