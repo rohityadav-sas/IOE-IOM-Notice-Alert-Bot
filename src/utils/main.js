@@ -19,11 +19,11 @@ async function handleBot(
 		sendNoticeFn(bot);
 		setInterval(async () => {
 			await sendNoticeFn(bot);
-		}, 10000);
+		}, 5 * 60 * 1000);
 		if (botName === 'IOE') {
 			setInterval(async () => {
 				await pushChanges('Scheduled commit', bot);
-			}, 10000);
+			}, 6 * 60 * 60 * 1000);
 		}
 	} catch (error) {
 		console.error(`Error with ${botName}:`, error);
