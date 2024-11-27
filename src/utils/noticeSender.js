@@ -67,10 +67,10 @@ function formatMessage(notice) {
 
 async function sendNoticeIOE(bot) {
 	let noticePaths = {
-		// 'exam': paths.IOEExamNoticesPath,
-		// 'entrance': paths.IOEEntranceNoticesPath,
-		official: paths.IOEOfficialPageNoticesPath
-		// 'admission': paths.IOEAdmissionNoticesPath
+		exam: paths.IOEExamNoticesPath,
+		entrance: paths.IOEEntranceNoticesPath,
+		official: paths.IOEOfficialPageNoticesPath,
+		admission: paths.IOEAdmissionNoticesPath
 	};
 	await Promise.all(
 		Object.keys(noticePaths).map(async (key) => {
