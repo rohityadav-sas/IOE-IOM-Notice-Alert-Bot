@@ -46,14 +46,14 @@ async function main() {
 				IOENoticesPath,
 				sendNoticeIOE,
 				'IOE'
+			),
+			handleBot(
+				process.env.TELEGRAM_BOT_TOKEN_IOM,
+				paths.chatIdsPathIOM,
+				IOMNoticesPath,
+				sendNoticeIOM,
+				'IOM'
 			)
-			// handleBot(
-			// 	process.env.TELEGRAM_BOT_TOKEN_IOM,
-			// 	paths.chatIdsPathIOM,
-			// 	IOMNoticesPath,
-			// 	sendNoticeIOM,
-			// 	'IOM'
-			// )
 		]);
 	} catch (error) {
 		console.error('An error occurred while running the bots:', error);
