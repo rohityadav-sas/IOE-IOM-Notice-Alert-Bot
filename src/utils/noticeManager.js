@@ -41,6 +41,9 @@ async function handleNotices(fetchCurrentNotices, savedNoticesPath) {
 	try {
 		const savedNotices = await fetchSavedNotices(savedNoticesPath);
 		const currentNotices = await fetchCurrentNotices;
+		if (!currentNotices) {
+			return [];
+		}
 		const newNotices = await checkForNewNotices(
 			currentNotices,
 			savedNotices,

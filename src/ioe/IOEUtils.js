@@ -5,6 +5,8 @@ const { formatDate } = require('../utils/date&TimeFormatter');
 // IOE: http://exam.ioe.edu.np/
 async function examIOE() {
 	try {
+		console.log('Fetching IOE exam notices');
+
 		let currentNotices = [];
 		const result = await axios.get('http://exam.ioe.edu.np/');
 		const $ = cheerio.load(result.data);
@@ -18,15 +20,23 @@ async function examIOE() {
 				row.find('td').eq(3).find('a').eq(1).attr('href');
 			currentNotices.push({ Date: date, Description: description, Url: url });
 		}
+		console.log('IOE exam notices fetched successfully');
+
 		return currentNotices;
 	} catch (error) {
-		console.error(error);
+		if (error.response && error.response.status === 502) {
+			console.error('Server down for IOE exam notices');
+		} else {
+			console.error(error);
+		}
 	}
 }
 
 // IOE: https://entrance.ioe.edu.np/
 async function entranceIOE() {
 	try {
+		console.log('Fetching IOE entrance notices');
+
 		let currentNotices = [];
 		const result = await axios.get('https://entrance.ioe.edu.np/Notice');
 		const $ = cheerio.load(result.data);
@@ -50,15 +60,23 @@ async function entranceIOE() {
 			const url = $notice('.well p a').attr('href');
 			currentNotices.push({ Date: date, Description: description, Url: url });
 		}
+		console.log('IOE entrance notices fetched successfully');
+
 		return currentNotices;
 	} catch (error) {
-		console.error(error);
+		if (error.response && error.response.status === 502) {
+			console.error('Server down for IOE entrance notices');
+		} else {
+			console.error(error);
+		}
 	}
 }
 
 //IOE: https://pcampus.edu.np/
 async function officialIOE() {
 	try {
+		console.log('Fetching IOE official notices');
+
 		let currentNotices = [];
 		let response = await axios.get('https://pcampus.edu.np/');
 		let $ = cheerio.load(response.data);
@@ -86,15 +104,23 @@ async function officialIOE() {
 			}
 			currentNotices.push({ Date: date, Description: description, Url: url });
 		}
+		console.log('IOE official notices fetched successfully');
+
 		return currentNotices;
 	} catch (error) {
-		console.error(error);
+		if (error.response && error.response.status === 502) {
+			console.error('Server down for IOE pcampus notices');
+		} else {
+			console.error(error);
+		}
 	}
 }
 
 //IOE: https://admission.ioe.edu.np
 async function admissionIOE() {
 	try {
+		console.log('Fetching IOE admission notices');
+
 		let currentNotices = [];
 		const result = await axios.get('https://admission.ioe.edu.np');
 		const $ = cheerio.load(result.data);
@@ -115,9 +141,15 @@ async function admissionIOE() {
 			}
 			currentNotices.push({ Date: date, Description: description, Url: url });
 		}
+		console.log('IOE admission notices fetched successfully');
+
 		return currentNotices;
 	} catch (error) {
-		console.error(error);
+		if (error.response && error.response.status === 502) {
+			console.error('Server down for IOE admission notices');
+		} else {
+			console.error(error);
+		}
 	}
 }
 
