@@ -29,6 +29,8 @@ async function examIOE() {
 	} catch (error) {
 		if (error.response && error.response.status === 502) {
 			console.error('Server down for IOE exam notices');
+		} else if (error.code === 'ECONNABORTED') {
+			console.error('Request timeout for IOE exam notices');
 		} else {
 			console.error(error);
 		}
@@ -72,6 +74,8 @@ async function entranceIOE() {
 	} catch (error) {
 		if (error.response && error.response.status === 502) {
 			console.error('Server down for IOE entrance notices');
+		} else if (error.code === 'ECONNABORTED') {
+			console.error('Request timeout for IOE entrance notices');
 		} else {
 			console.error(error);
 		}
@@ -119,6 +123,8 @@ async function officialIOE() {
 	} catch (error) {
 		if (error.response && error.response.status === 502) {
 			console.error('Server down for IOE pcampus notices');
+		} else if (error.code === 'ECONNABORTED') {
+			console.error('Request timeout for IOE pcampus notices');
 		} else {
 			console.error(error);
 		}
@@ -158,6 +164,8 @@ async function admissionIOE() {
 	} catch (error) {
 		if (error.response && error.response.status === 502) {
 			console.error('Server down for IOE admission notices');
+		} else if (error.code === 'ECONNABORTED') {
+			console.error('Request timeout for IOE admission notices');
 		} else {
 			console.error(error);
 		}
