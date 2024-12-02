@@ -9,8 +9,7 @@ async function examIOE() {
 
 		let currentNotices = [];
 		const result = await axios.get('http://exam.ioe.edu.np/', {
-			timeout: 10000,
-			timeoutErrorMessage: 'Connection timeout'
+			timeout: 10000
 		});
 		const $ = cheerio.load(result.data);
 		const table = $('#datatable tbody tr');
@@ -30,7 +29,7 @@ async function examIOE() {
 		if (error.response && error.response.status === 502) {
 			console.error('Server down for IOE exam notices');
 		} else if (error.code === 'ECONNABORTED') {
-			console.error('Request timeout for IOE exam notices');
+			console.error('Conntection timeout for IOE exam notices');
 		} else {
 			console.error(error);
 		}
@@ -44,8 +43,7 @@ async function entranceIOE() {
 
 		let currentNotices = [];
 		const result = await axios.get('https://entrance.ioe.edu.np/Notice', {
-			timeout: 10000,
-			timeoutErrorMessage: 'Connection timeout'
+			timeout: 10000
 		});
 		const $ = cheerio.load(result.data);
 		const table = $('table.table.table-bordered tbody tr');
@@ -75,7 +73,7 @@ async function entranceIOE() {
 		if (error.response && error.response.status === 502) {
 			console.error('Server down for IOE entrance notices');
 		} else if (error.code === 'ECONNABORTED') {
-			console.error('Request timeout for IOE entrance notices');
+			console.error('Conntection timeout for IOE entrance notices');
 		} else {
 			console.error(error);
 		}
@@ -89,8 +87,7 @@ async function officialIOE() {
 
 		let currentNotices = [];
 		let response = await axios.get('https://pcampus.edu.np/', {
-			timeout: 10000,
-			timeoutErrorMessage: 'Connection timeout'
+			timeout: 10000
 		});
 		let $ = cheerio.load(response.data);
 		let table = $('#recent-posts-2 ul li');
@@ -124,7 +121,7 @@ async function officialIOE() {
 		if (error.response && error.response.status === 502) {
 			console.error('Server down for IOE pcampus notices');
 		} else if (error.code === 'ECONNABORTED') {
-			console.error('Request timeout for IOE pcampus notices');
+			console.error('Conntection timeout for IOE pcampus notices');
 		} else {
 			console.error(error);
 		}
@@ -138,8 +135,7 @@ async function admissionIOE() {
 
 		let currentNotices = [];
 		const result = await axios.get('https://admission.ioe.edu.np', {
-			timeout: 10000,
-			timeoutErrorMessage: 'Connection timeout'
+			timeout: 10000
 		});
 		const $ = cheerio.load(result.data);
 		const table = $('table.table.table-bordered tbody tr');
@@ -165,7 +161,7 @@ async function admissionIOE() {
 		if (error.response && error.response.status === 502) {
 			console.error('Server down for IOE admission notices');
 		} else if (error.code === 'ECONNABORTED') {
-			console.error('Request timeout for IOE admission notices');
+			console.error('Conntection timeout for IOE admission notices');
 		} else {
 			console.error(error);
 		}
