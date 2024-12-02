@@ -8,7 +8,10 @@ async function examIOE() {
 		console.log('Fetching IOE exam notices');
 
 		let currentNotices = [];
-		const result = await axios.get('http://exam.ioe.edu.np/');
+		const result = await axios.get('http://exam.ioe.edu.np/', {
+			timeout: 10000,
+			timeoutErrorMessage: 'Connection timeout'
+		});
 		const $ = cheerio.load(result.data);
 		const table = $('#datatable tbody tr');
 		for (let i = 0; i < 5; i++) {
@@ -38,7 +41,10 @@ async function entranceIOE() {
 		console.log('Fetching IOE entrance notices');
 
 		let currentNotices = [];
-		const result = await axios.get('https://entrance.ioe.edu.np/Notice');
+		const result = await axios.get('https://entrance.ioe.edu.np/Notice', {
+			timeout: 10000,
+			timeoutErrorMessage: 'Connection timeout'
+		});
 		const $ = cheerio.load(result.data);
 		const table = $('table.table.table-bordered tbody tr');
 		for (let i = 0; i < table.length; i++) {
@@ -78,7 +84,10 @@ async function officialIOE() {
 		console.log('Fetching IOE official notices');
 
 		let currentNotices = [];
-		let response = await axios.get('https://pcampus.edu.np/');
+		let response = await axios.get('https://pcampus.edu.np/', {
+			timeout: 10000,
+			timeoutErrorMessage: 'Connection timeout'
+		});
 		let $ = cheerio.load(response.data);
 		let table = $('#recent-posts-2 ul li');
 		for (let i = 0; i < table.length; i++) {
@@ -122,7 +131,10 @@ async function admissionIOE() {
 		console.log('Fetching IOE admission notices');
 
 		let currentNotices = [];
-		const result = await axios.get('https://admission.ioe.edu.np');
+		const result = await axios.get('https://admission.ioe.edu.np', {
+			timeout: 10000,
+			timeoutErrorMessage: 'Connection timeout'
+		});
 		const $ = cheerio.load(result.data);
 		const table = $('table.table.table-bordered tbody tr');
 		for (let i = 0; i < table.length; i++) {
@@ -142,7 +154,6 @@ async function admissionIOE() {
 			currentNotices.push({ Date: date, Description: description, Url: url });
 		}
 		console.log('IOE admission notices fetched successfully');
-
 		return currentNotices;
 	} catch (error) {
 		if (error.response && error.response.status === 502) {
