@@ -48,3 +48,7 @@
 
 [Tuesday, December 10, 2024] [04:11 PM] - New notice received: Result of MBBS and BDS 2nd Year Supplementary Exam 2081
 
+[Wednesday, December 11, 2024] [09:58 PM] - Michael started the IOE bot. Chat ID: 6581733948
+
+[Wednesday, December 11, 2024] [09:58 PM] - Michael selected: Latest Notices
+
