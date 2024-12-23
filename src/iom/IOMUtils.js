@@ -4,7 +4,7 @@ const { formatDate } = require('../utils/date&TimeFormatter');
 
 async function fetchCurrentNoticesIOM() {
 	try {
-		console.log('Fetching IOM notices');
+		console.log('Fetching IOM exam notices');
 		const currentNotices = [];
 		const result = await axios.get(
 			'https://iomexam.edu.np/index.php/exam/results'
@@ -19,7 +19,7 @@ async function fetchCurrentNoticesIOM() {
 			date = formatDate(date);
 			currentNotices.push({ Date: date, Description: description, Url: url });
 		}
-		console.log('IOM notices fetched successfully');
+		console.log('IOM exam notices fetched successfully');
 		return currentNotices;
 	} catch (err) {
 		console.error(`Error fetching notices for IOM: ${err.response.data}`);
