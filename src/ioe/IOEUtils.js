@@ -83,7 +83,7 @@ async function entranceIOE() {
 //IOE: https://pcampus.edu.np/
 async function officialIOE() {
 	try {
-		console.log('Fetching IOE official notices');
+		console.log('Fetching pcampus notices');
 
 		let currentNotices = [];
 		let response = await axios.get('https://pcampus.edu.np/', {
@@ -114,7 +114,7 @@ async function officialIOE() {
 			}
 			currentNotices.push({ Date: date, Description: description, Url: url });
 		}
-		console.log('IOE official notices fetched successfully');
+		console.log('Pcampus notices fetched successfully');
 
 		return currentNotices;
 	} catch (error) {

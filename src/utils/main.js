@@ -40,13 +40,13 @@ async function main() {
 		];
 		const IOMNoticesPath = [paths.IOMExamNoticesPath];
 		await Promise.all([
-			handleBot(
-				process.env.TELEGRAM_BOT_TOKEN_IOE,
-				paths.chatIdsPathIOE,
-				IOENoticesPath,
-				sendNoticeIOE,
-				'IOE'
-			),
+			// handleBot(
+			// 	process.env.TELEGRAM_BOT_TOKEN_IOE,
+			// 	paths.chatIdsPathIOE,
+			// 	IOENoticesPath,
+			// 	sendNoticeIOE,
+			// 	'IOE'
+			// ),
 			handleBot(
 				process.env.TELEGRAM_BOT_TOKEN_IOM,
 				paths.chatIdsPathIOM,

@@ -4,9 +4,10 @@ const { formatDate } = require('../utils/date&TimeFormatter');
 
 async function fetchCurrentNoticesIOM() {
 	try {
+		console.log('Fetching IOM notices');
 		const currentNotices = [];
 		const result = await axios.get(
-			'http://www.iomexam.edu.np/index.php/exam/results'
+			'https://iomexam.edu.np/index.php/exam/results'
 		);
 		const $ = cheerio.load(result.data);
 		const table = $('.table.table-striped.table-bordered.dTableR tbody');
@@ -18,9 +19,10 @@ async function fetchCurrentNoticesIOM() {
 			date = formatDate(date);
 			currentNotices.push({ Date: date, Description: description, Url: url });
 		}
+		console.log('IOM notices fetched successfully');
 		return currentNotices;
 	} catch (err) {
-		console.error(`Error fetching notices for IOM: ${err.response.statusText}`);
+		console.error(`Error fetching notices for IOM: ${err.response.data}`);
 		return [];
 	}
 }
