@@ -16,7 +16,7 @@ async function examIOE() {
 	try {
 		console.log('Fetching IOE exam notices');
 		let currentNotices = [];
-		const result = await axios.get('http://exam.ioe.edu.np/');
+		const result = await axiosInstance.get('http://exam.ioe.edu.np/');
 		const $ = cheerio.load(result.data);
 		const table = $('#datatable tbody tr');
 		for (let i = 0; i < 5; i++) {
