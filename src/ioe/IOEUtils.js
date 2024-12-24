@@ -2,19 +2,21 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const { formatDate } = require('../utils/date&TimeFormatter');
 
+const axiosInstance = axios.create({
+	proxy: {
+		protocol: 'http',
+		host: '38.54.71.67',
+		port: 80
+	},
+	timeout: 10000
+});
+
 // IOE: http://exam.ioe.edu.np/
 async function examIOE() {
 	try {
 		console.log('Fetching IOE exam notices');
 		let currentNotices = [];
-		const result = await axios.get('http://exam.ioe.edu.np/', {
-			proxy: {
-				protocol: 'http',
-				host: '38.54.71.67',
-				port: 80
-			},
-			timeout: 10000
-		});
+		const result = await axiosInstance.get('http://exam.ioe.edu.np/');
 		const $ = cheerio.load(result.data);
 		const table = $('#datatable tbody tr');
 		for (let i = 0; i < 5; i++) {
@@ -46,9 +48,9 @@ async function entranceIOE() {
 		console.log('Fetching IOE entrance notices');
 
 		let currentNotices = [];
-		const result = await axios.get('https://entrance.ioe.edu.np/Notice', {
-			timeout: 10000
-		});
+		const result = await axiosInstance.get(
+			'https://entrance.ioe.edu.np/Notice'
+		);
 		const $ = cheerio.load(result.data);
 		const table = $('table.table.table-bordered tbody tr');
 		for (let i = 0; i < table.length; i++) {
@@ -90,9 +92,7 @@ async function officialIOE() {
 		console.log('Fetching IOE pcampus notices');
 
 		let currentNotices = [];
-		let response = await axios.get('https://pcampus.edu.np/', {
-			timeout: 10000
-		});
+		let response = await axios.get('https://pcampus.edu.np/');
 		let $ = cheerio.load(response.data);
 		let table = $('#recent-posts-2 ul li');
 		for (let i = 0; i < table.length; i++) {
@@ -138,9 +138,7 @@ async function admissionIOE() {
 		console.log('Fetching IOE admission notices');
 
 		let currentNotices = [];
-		const result = await axios.get('https://admission.ioe.edu.np', {
-			timeout: 10000
-		});
+		const result = await axiosInstance.get('https://admission.ioe.edu.np');
 		const $ = cheerio.load(result.data);
 		const table = $('table.table.table-bordered tbody tr');
 		for (let i = 0; i < table.length; i++) {
