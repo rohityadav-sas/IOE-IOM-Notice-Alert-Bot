@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
 	proxy: {
 		protocol: 'http',
 		host: '38.54.71.67',
-		port: 80
+		port: '80'
 	},
 	timeout: 20000
 });
