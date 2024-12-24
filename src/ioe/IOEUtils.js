@@ -16,7 +16,7 @@ async function examIOE() {
 	try {
 		console.log('Fetching IOE exam notices');
 		let currentNotices = [];
-		const result = await axiosInstance.get('http://exam.ioe.edu.np/');
+		const result = await axios.get('http://exam.ioe.edu.np/');
 		const $ = cheerio.load(result.data);
 		const table = $('#datatable tbody tr');
 		for (let i = 0; i < 5; i++) {
@@ -138,7 +138,9 @@ async function admissionIOE() {
 		console.log('Fetching IOE admission notices');
 
 		let currentNotices = [];
-		const result = await axiosInstance.get('https://admission.ioe.edu.np');
+		const result = await axiosInstance.get('https://admission.ioe.edu.np', {
+			maxRedirects: 10
+		});
 		const $ = cheerio.load(result.data);
 		const table = $('table.table.table-bordered tbody tr');
 		for (let i = 0; i < table.length; i++) {
@@ -162,6 +164,8 @@ async function admissionIOE() {
 	} catch (error) {
 		if (error.response && error.response.status === 502) {
 			console.error('Server down for IOE admission notices');
+		} else if (error.code === 'ERR_FR_TOO_MANY_REDIRECTS') {
+			console.error('Too many redirects for IOE admission notices');
 		} else if (error.code === 'ECONNABORTED') {
 			console.error('Connection timeout for IOE admission notices');
 		} else {
