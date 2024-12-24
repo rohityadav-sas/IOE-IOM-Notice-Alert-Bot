@@ -8,6 +8,11 @@ async function examIOE() {
 		console.log('Fetching IOE exam notices');
 		let currentNotices = [];
 		const result = await axios.get('http://exam.ioe.edu.np/', {
+			proxy: {
+				protocol: 'http',
+				host: '38.54.71.67',
+				port: 80
+			},
 			timeout: 10000
 		});
 		const $ = cheerio.load(result.data);
