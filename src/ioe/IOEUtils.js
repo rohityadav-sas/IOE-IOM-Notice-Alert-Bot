@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
 		host: '38.54.71.67',
 		port: 80
 	},
-	timeout: 10000
+	timeout: 20000
 });
 
 // IOE: http://exam.ioe.edu.np/
