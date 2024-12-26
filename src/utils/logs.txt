@@ -44,3 +44,9 @@
 
 [Tuesday, December 24, 2024] [08:40 PM] - User with chatId 1139111594 has blocked the bot.
 
+[Tuesday, December 24, 2024] [05:08 PM] - New notice received: Result: BE III/I  part (Regular Back) exam held on 2081 Bhadra
+
+[Tuesday, December 24, 2024] [05:25 PM] - Michael started the IOE bot. Chat ID: 6581733948
+
+[Tuesday, December 24, 2024] [05:25 PM] - Michael selected: Latest Notices
+
