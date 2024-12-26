@@ -5,8 +5,8 @@ const { formatDate } = require('../utils/date&TimeFormatter');
 const axiosInstance = axios.create({
 	proxy: {
 		protocol: 'http',
-		host: '38.54.71.67',
-		port: '80'
+		host: '110.34.1.180',
+		port: 32650
 	},
 	timeout: 20000
 });
