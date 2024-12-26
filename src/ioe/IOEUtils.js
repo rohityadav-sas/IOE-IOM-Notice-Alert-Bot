@@ -36,6 +36,8 @@ async function examIOE() {
 			console.error('Server down for IOE exam notices');
 		} else if (error.code === 'ECONNABORTED') {
 			console.error('Connection timeout for IOE exam notices');
+		} else if (error.code === 'ECONNRESET') {
+			console.error('Socket Hang Up!');
 		} else {
 			console.error(error);
 		}
@@ -80,6 +82,8 @@ async function entranceIOE() {
 			console.error('Server down for IOE entrance notices');
 		} else if (error.code === 'ECONNABORTED') {
 			console.error('Connection timeout for IOE entrance notices');
+		} else if (error.code === 'ECONNRESET') {
+			console.error('Socket Hang Up!');
 		} else {
 			console.error(error);
 		}
@@ -166,6 +170,8 @@ async function admissionIOE() {
 			console.error('Server down for IOE admission notices');
 		} else if (error.code === 'ERR_FR_TOO_MANY_REDIRECTS') {
 			console.error('Too many redirects for IOE admission notices');
+		} else if (error.code === 'ECONNRESET') {
+			console.error('Socket Hang Up!');
 		} else if (error.code === 'ECONNABORTED') {
 			console.error('Connection timeout for IOE admission notices');
 		} else {
