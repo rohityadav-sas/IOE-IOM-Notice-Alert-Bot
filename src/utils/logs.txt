@@ -124,3 +124,7 @@
 
 [Tuesday, January 21, 2025] [05:33 PM] - New notice received: Re-Totaling Result: BE/BAR All Year I & II Part (R/B) Exam Held In 2081 Bhadra / Asoj
 
+[Thursday, January 23, 2025] [04:18 PM] - User with chatId 7954381158 has blocked the bot.
+
+[Thursday, January 23, 2025] [04:18 PM] - New notice received: Re totaling result of the MBBS & BDS 2nd Year of  Supplementary Exam 2081
+
