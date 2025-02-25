@@ -172,3 +172,13 @@
 
 [Tuesday, February 25, 2025] [08:01 PM] - New notice received: Routine of B. Sc. MLT 2nd Year Practical Examination CMCNew notice received: Routine of Masters (PG) 1st and 2nd Year Regular & Supplementary Exam 2082New notice received: Practical Routine of MBBS 3rd Phase 4th Year Supplementary Exam 2081New notice received: Practical Routine of BDS 4th Year 1st Phase Supplementary Exam 2081.
 
+[Tuesday, February 25, 2025] [02:23 PM] - Error sending message to 7070127929: EFATAL: AggregateError
+
+[Tuesday, February 25, 2025] [02:23 PM] - New notice received: Practical Exam Routine of B.Sc.MIT and BNS 3rd Year 2081
+
+[Tuesday, February 25, 2025] [05:03 PM] - New notice received: “ऋतिक आचार्य पुल्चोक गौरव पुरुस्कार -२०८१” को अन्तिम नतिजा  सम्बन्धमा
+
+[Tuesday, February 25, 2025] [08:13 PM] - Saberika Shrestha started the IOM bot. Chat ID: 8177798177
+
+[Tuesday, February 25, 2025] [08:14 PM] - Saberika Shrestha selected: Latest Notices
+
