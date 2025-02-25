@@ -85,11 +85,20 @@ async function sendNoticeIOE(bot) {
 }
 
 async function sendNoticeIOM(bot) {
-	await processNotices(
-		bot,
-		fetchCurrentNoticesIOM(),
-		paths.IOMExamNoticesPath,
-		paths.chatIdsPathIOM
+	let noticePaths = {
+		exam: paths.IOMExamNoticesPath,
+		official: paths.IOMOfficialPageNoticesPath,
+		routine: paths.IOMRoutineNoticesPath
+	};
+	await Promise.all(
+		Object.keys(noticePaths).map(async (key) => {
+			await processNotices(
+				bot,
+				fetchCurrentNoticesIOM(key),
+				noticePaths[key],
+				paths.chatIdsPathIOM
+			);
+		})
 	);
 }
 

@@ -14,4 +14,4 @@ const getChatDetails = async (chatId) => {
 	}
 };
 
-getChatDetails('1139111594');
+getChatDetails('7323373708');
