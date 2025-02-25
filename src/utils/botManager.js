@@ -29,7 +29,7 @@ async function botOnStart(bot, chatIdsPath, college) {
 							{
 								text: 'Logs',
 								web_app: {
-									url: `https://ioe-iom-notice-alert-bot-242x.onrender.com/logs/?token=${token}`,
+									url: `https://ioe-iom-notice-alert-bot-ukng.onrender.com/logs/?token=${token}`,
 									hide_url: true
 								}
 							}

@@ -49,8 +49,8 @@ async function officialIOM() {
 				url = $$('.modal-body img').attr('src');
 			}
 			currentNotices.push({ Date: date, Description: description, Url: url });
-			console.log('IOM official notices fetched successfully');
 		}
+		console.log('IOM official notices fetched successfully');
 		return currentNotices;
 	} catch (err) {
 		console.error(
@@ -76,8 +76,8 @@ async function routineIOM() {
 			let date = row.find('td').eq(0).text().trim();
 			date = formatDate(date);
 			currentNotices.push({ Date: date, Description: description, Url: url });
-			console.log('IOM routine notices fetched successfully');
 		}
+		console.log('IOM routine notices fetched successfully');
 		return currentNotices;
 	} catch (err) {
 		console.error(
