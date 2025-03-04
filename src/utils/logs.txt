@@ -200,3 +200,9 @@
 
 [Tuesday, March 4, 2025] [01:08 PM] - New notice received: MSc Admission Detail Notice 2081
 
+[Tuesday, March 4, 2025] [02:23 PM] - New notice received: Routine of MBBS 2nd Phase and BDS 3rd Year Supplementary Exam 2081
+
+[Tuesday, March 4, 2025] [06:48 PM] - Error sending message to 1012711232: EFATAL: AggregateError
+
+[Tuesday, March 4, 2025] [06:48 PM] - New notice received: Notice: Exam Postponed NoticeNew notice received: Online Form: BE/BAR I&II Year I Part (Regular) for 2081 ChaitraNew notice received: Online Form: BE/BAR I&II Year I Part (Regular) for 2081 Chaitra
+
